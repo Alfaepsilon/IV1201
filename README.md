@@ -9,7 +9,6 @@ The following software development tools are used.
 - Version control (Git)
 - Project management (npm)
 - Automatic restart (nodemon)
-- Static analysis (ESLint)
 
 ## Frameworks
 
