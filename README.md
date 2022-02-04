@@ -1,7 +1,6 @@
-# The Chat Application
+# Group 9 Project
 
-This is the chat sample application for IV1201. The purpose is to show usage of
-JavaScript frameworks and tools.
+This is the project in the course IV1201 for Group 9. Client-Side Rendering with a Monolithic Architecture. 
 
 ## Tools
 
@@ -45,7 +44,3 @@ The repository contains only a REST api, no client. The API can be tried by usin
 ## Execute Tests
 
 The tests are started by giving the command `npm test` in the `server` directory.
-
-## More Documentation
-
-The file `js-rest-api.pdf` is a presentation that provides some background on REST apis, and covers most of the frameworks and apis used in the chat api.
