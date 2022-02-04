@@ -28,7 +28,7 @@ The following frameworks are used.
 
 ## Installation
 
-Install node.js, clone this git repository and install all required npm packages by giving the command `npm install` in the `server` directory.
+Install node.js, clone this git repository and install all required npm packages by giving the command `npm install` in the root directory.
 
 ## Start the Application
 
