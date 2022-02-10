@@ -6,6 +6,7 @@ const APP_ROOT_DIR = path.join(__dirname, '..');
 const result = require('dotenv-safe').config({
   path: path.join(APP_ROOT_DIR, '.env'),
   example: path.join(APP_ROOT_DIR, '.env.example'),
+  allowEmptyValues: true
 });
 
 const express = require('express');
@@ -23,9 +24,9 @@ app.get('/', (req, res) => {
   return res.send('Welcome to the API');
 });
 
-const reqHandlerLoader = require('./api');
+/*const reqHandlerLoader = require('./api');
 reqHandlerLoader.loadHandlers(app);
-reqHandlerLoader.loadErrorHandlers(app);
+reqHandlerLoader.loadErrorHandlers(app);*/
 
 const server = app.listen(
     process.env.SERVER_PORT,

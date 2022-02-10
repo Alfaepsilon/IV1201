@@ -19,6 +19,7 @@ class recruitDAO
             dialect: process.env.DATABASE_DIALECT}
         );
         Person.createModel(this.database);
+        console.log("constructor");
     }
 
     /**
@@ -31,6 +32,7 @@ class recruitDAO
         {
             await this.database.authenticate();
             await this.database.sync({force: false});
+            console.log("maketables");
         }
         catch
         {
@@ -49,6 +51,7 @@ class recruitDAO
          var matchingPerson = await Person.getUsers({
              where: {username: username, password: password}
            });
+           console.log("login");
          if (Object.keys(matchingPerson).length > 1){return true;}
          else {return false;}
      }
