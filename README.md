@@ -38,3 +38,4 @@ The repository contains only a REST api, no client. The API can be tried by usin
 1. Start the application by giving the command `npm run start-dev` in the `server` directory.
 1. Start insomnia
 1. Import the file `insomnia-chat-api-requests.json`, which will populate insomnia with all requests that can be made to tha chat api.
+ 
