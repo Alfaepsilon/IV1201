@@ -7,18 +7,20 @@ class Person extends Sequelize.Model {
    * @return {Model} A sequelize model describing the Person entity.
    */
     Person.init(
-        {
-          username: {
-            type: Sequelize.STRING,
-            allowNull: false,
-          },
-          password: {
-              type: Sequelize.STRING,
-              allowNull: false,
-          }
+      {
+        username: {
+          type: Sequelize.STRING,
+          allowNull: false,
         },
-        {sequelize, modelName: 'person', paranoid: true}
+        password: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        }
+      },
+      { sequelize, modelName: 'person', paranoid: true }
     );
     return Person;
   }
 }
+
+module.exports = Person;

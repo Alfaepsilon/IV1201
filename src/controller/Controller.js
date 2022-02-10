@@ -17,7 +17,8 @@ class Controller {
     console.log(username);
     console.log(password);
     try {
-      var check_login = await this.recruitDAO.login(username, password);
+      var check_login = await this?.recruitDAO.login(username, password);
+      console.log(check_login);
       return check_login;
     } catch (error) {
       console.log(error);
@@ -25,4 +26,4 @@ class Controller {
   }
 }
 
-module.exports = { Controller: Controller, Login: Controller.login };
+module.exports = { Controller: Controller, Login: Controller.login, CreateController: Controller.createController };

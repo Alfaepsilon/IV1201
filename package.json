@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "JSON file contaning frameworks to be used",
   "author": "Henrik Cassé",
-  "license": "",
+  "license": "ISC",
   "main": "src/server.js",
   "scripts": {
     "start-dev": "SET NODE_ENV=development & nodemon src/server",
@@ -26,5 +26,13 @@
   },
   "devDependencies": {
     "mysql": "^2.17.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alfaepsilon/IV1201.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfaepsilon/IV1201/issues"
+  },
+  "homepage": "https://github.com/Alfaepsilon/IV1201#readme"
 }

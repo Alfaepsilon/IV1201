@@ -4,7 +4,8 @@ const path = require('path');
 const APP_ROOT_DIR = path.join(__dirname, '..');
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const {Login} = require('../src/controller/Controller')
+const { Login } = require('../src/controller/Controller')
+const { CreateController } = require('../src/controller/Controller');
 const result = require('dotenv-safe').config({
   path: path.join(APP_ROOT_DIR, '.env'),
   example: path.join(APP_ROOT_DIR, '.env'),
@@ -19,7 +20,7 @@ app.use(bodyParser.json());
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(cookieParser());
 
@@ -29,12 +30,13 @@ app.get('/', (req, res) => {
   return res.render('login')
 });
 app.post('/auth', (req, res) => {
+  CreateController()
   console.log(req.body)
   var json = {
     user: req.body.username,
     pass: req.body.password
   }
-  Login(req.body.username,req.body.password)
+  Login(req.body.username, req.body.password)
   res.json(json)
   // res.send(`Welcome ${req.body.username} to the API`);
 });
@@ -44,13 +46,13 @@ reqHandlerLoader.loadHandlers(app);
 reqHandlerLoader.loadErrorHandlers(app);*/
 
 const server = app.listen(
-    process.env.SERVER_PORT,
-    process.env.SERVER_HOST,
-    () => {
-      console.log(
-          `Server is up at ${server.address().address}:${server.address().port}`
-      );
-    }
+  process.env.SERVER_PORT,
+  process.env.SERVER_HOST,
+  () => {
+    console.log(
+      `Server is up at ${server.address().address}:${server.address().port}`
+    );
+  }
 );
 
 module.exports = server; // Needed for tests.
