@@ -20,6 +20,7 @@ class Person extends Sequelize.Model {
       },
       { sequelize, modelName: 'person', paranoid: true }
     );
+    console.log("person logged!")
     return Person;
   }
 }
