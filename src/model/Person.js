@@ -1,3 +1,4 @@
+'use strict';
 const Sequelize = require('sequelize');
 class Person extends Sequelize.Model {
   static createModel(sequelize) {
@@ -23,4 +24,4 @@ class Person extends Sequelize.Model {
   }
 }
 
-module.exports = Person;
+module.exports = {Person: Person, createModel: Person.createModel};

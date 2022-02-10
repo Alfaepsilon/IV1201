@@ -1,6 +1,6 @@
 "use strict";
 
-const recruitDAO = require("../integration/recruitDAO");
+const recruitDAO = require('../integration/recruitDAO').recruitDAO;
 
 class Controller {
   constructor() {
@@ -13,11 +13,11 @@ class Controller {
     return controller;
   }
 
-  static async login(username, password) {
+  async login(username, password) {
     console.log(username);
     console.log(password);
     try {
-      var check_login = await this?.recruitDAO.login(username, password);
+      var check_login = await this.recruitDAO.login(username, password);
       console.log(check_login);
       return check_login;
     } catch (error) {
@@ -26,4 +26,4 @@ class Controller {
   }
 }
 
-module.exports = { Controller: Controller, Login: Controller.login, CreateController: Controller.createController };
+module.exports = {Controller: Controller, login: Controller.login, createController: Controller.createController};
