@@ -42,12 +42,12 @@ class recruitDAO {
    */
   async login(username, password) {
     console.log("Logging in!");
-    await Person.sync({ force: false }).then(function () {
+    /*await Person.sync({ force: false }).then(function () {
       Person.create({
         username: username,
         password: password
       })
-    });
+    }); */
     var matchingPerson = await Person.findAll({
       where: { username: username, password: password }
     });

@@ -9,20 +9,24 @@ class Person extends Sequelize.Model {
    */
     Person.init(
       {
+        person_id: {
+          type: Sequelize.INTEGER,
+          primaryKey: true
+        },
         username: {
           type: Sequelize.STRING,
-          /*allowNull: false,*/
+          allowNull: false,
         },
         password: {
           type: Sequelize.STRING,
-          /*allowNull: false,*/
+          allowNull: false,
         }
       },
-      { sequelize, modelName: 'person', paranoid: true }
+      { sequelize, modelName: 'person', paranoid: true, freezeTableName: true, timestamps: false }
     );
     console.log("person logged!")
     return Person;
   }
 }
 
-module.exports = {Person: Person, createModel: Person.createModel};
+module.exports = { Person: Person, createModel: Person.createModel };
