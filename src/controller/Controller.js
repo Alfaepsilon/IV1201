@@ -26,4 +26,4 @@ class Controller {
   }
 }
 
-module.exports = {Controller: Controller, login: Controller.login, createController: Controller.createController};
+module.exports = { Controller: Controller, login: Controller.login, createController: Controller.createController };

@@ -42,14 +42,22 @@ class recruitDAO {
    */
   async login(username, password) {
     console.log("Logging in!");
-    var matchingPerson = await Person.findAll({
-    where: { username: username, password: password} 
+    await Person.sync({ force: false }).then(function () {
+      Person.create({
+        username: username,
+        password: password
+      })
     });
-    if (Object.keys(matchingPerson).length > 1) {
+    var matchingPerson = await Person.findAll({
+      where: { username: username, password: password }
+    });
+    console.log(matchingPerson);
+    console.log(Object.keys(matchingPerson).length);
+    if (Object.keys(matchingPerson).length >= 1) {
       return true;
     } else {
       return false;
     }
   }
 }
-module.exports = {recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO};
+module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO };
