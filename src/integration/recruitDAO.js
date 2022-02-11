@@ -43,7 +43,7 @@ class recruitDAO {
   async login(username, password) {
     console.log("Logging in!");
     var matchingPerson = await Person.findAll({
-      where: { username: username, password: password },
+    where: { username: username, password: password} 
     });
     if (Object.keys(matchingPerson).length > 1) {
       return true;

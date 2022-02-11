@@ -11,11 +11,11 @@ class Person extends Sequelize.Model {
       {
         username: {
           type: Sequelize.STRING,
-          allowNull: false,
+          /*allowNull: false,*/
         },
         password: {
           type: Sequelize.STRING,
-          allowNull: false,
+          /*allowNull: false,*/
         }
       },
       { sequelize, modelName: 'person', paranoid: true }
