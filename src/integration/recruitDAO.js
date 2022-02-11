@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const Person = require('../model/Person');
+const Person = require('../model/Person').Person;
 /* This class is responsible for all database calls.
  */
 class recruitDAO {
@@ -42,7 +42,7 @@ class recruitDAO {
    */
   async login(username, password) {
     console.log("Logging in!");
-    var matchingPerson = await Person.getUsers({
+    var matchingPerson = await Person.findAll({
       where: { username: username, password: password },
     });
     if (Object.keys(matchingPerson).length > 1) {
