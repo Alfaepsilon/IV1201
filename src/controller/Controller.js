@@ -17,9 +17,15 @@ class Controller {
     console.log(username);
     console.log(password);
     try {
-      var check_login = await this.recruitDAO.login(username, password);
-      console.log(check_login);
-      return check_login;
+      var matchingPerson = await this.recruitDAO.login(username, password);
+      console.log(Object.keys(matchingPerson).length)
+      if (Object.keys(matchingPerson).length >= 1) {
+        console.log(true);
+        return true
+      } else {
+        console.log(false)
+        return false;
+      }
     } catch (error) {
       console.log(error);
     }

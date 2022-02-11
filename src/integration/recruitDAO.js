@@ -51,13 +51,7 @@ class recruitDAO {
     var matchingPerson = await Person.findAll({
       where: { username: username, password: password }
     });
-    console.log(matchingPerson);
-    console.log(Object.keys(matchingPerson).length);
-    if (Object.keys(matchingPerson).length >= 1) {
-      return true;
-    } else {
-      return false;
-    }
+    return matchingPerson;
   }
 }
 module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO };
