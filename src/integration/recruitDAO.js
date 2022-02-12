@@ -17,14 +17,22 @@ class recruitDAO {
     console.log('Constructing recruitDAO')
   }
 
+  /**
+     * Returns true if the function matches a person's parameters
+     * @param {String} username The username of the user.
+     * @param {String}  password The password of our useful.
+     * @return {Boolean} 
+     */
+
   static async createDAO() {
     const recDAO = new recruitDAO();
     return recDAO;
   }
 
-  /* @async
-   * Creates all non-included tables
-   */
+
+  /**   Creates all non-included tables
+     * @async 
+     */
   async makeTables() {
     try {
       await this.database.authenticate();
@@ -35,11 +43,13 @@ class recruitDAO {
     }
   }
 
-  /* Returns true if the function matches a person's parameters
-   * @param {string} username
-   * @param {string} password
-   * @returns {boolean}
-   */
+  /**
+     * Returns true if the function matches a person's parameters
+     * @param {String} username The username of the user.
+     * @param {String}  password The password of our useful.
+     * @return {Boolean} 
+     */
+
   async login(username, password) {
     console.log("Logging in!");
     /*await Person.sync({ force: false }).then(function () {
