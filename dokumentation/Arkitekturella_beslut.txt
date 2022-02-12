@@ -13,3 +13,5 @@ Standard för kommentering av funktioner följer följande mall:
 * @param {Type} Parameter
 * @return {Type} Return value
 */
+Use Sequalize for database.
+Use ejs for view.
