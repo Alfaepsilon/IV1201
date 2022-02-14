@@ -21,7 +21,7 @@ Amiran: Security.
 Bushraa: Sign up view och skapa ny "dummy view" för testning av authorization.
 Henrik: Error Handler, Cloud.
 New usecase: Registration
-Get the application up on the cloud.
+Get the application up on the cloud. (Heroku)
 Error handler.
 Add encryption to password in database.
 Fix authorization.
