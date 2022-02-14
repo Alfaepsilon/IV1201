@@ -23,4 +23,7 @@ Henrik: Error Handler, Cloud.
 New usecase: Registration
 Get the application up on the cloud.
 Error handler.
-
+Add encryption to password in database.
+Fix authorization.
+Better README on git
+Better documentation (architectural descisions and program documentation).
