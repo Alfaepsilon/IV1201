@@ -15,3 +15,12 @@ Standard för kommentering av funktioner följer följande mall:
 */
 Use Sequalize for database.
 Use ejs for view.
+
+2022-02-14:
+Amiran: Security.
+Bushraa: Sign up view och skapa ny "dummy view" för testning av authorization.
+Henrik: Error Handler, Cloud.
+New usecase: Registration
+Get the application up on the cloud.
+Error handler.
+
