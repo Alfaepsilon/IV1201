@@ -46,8 +46,9 @@ app.post('/auth', (req, res) => {
 reqHandlerLoader.loadHandlers(app);
 reqHandlerLoader.loadErrorHandlers(app);*/
 
+var port = process.env.PORT || process.env.SERVER_PORT
 const server = app.listen(
-  process.env.PORT || process.env.SERVER_PORT,
+  port ,
   process.env.SERVER_HOST,
   () => {
     console.log(
