@@ -47,7 +47,7 @@ reqHandlerLoader.loadHandlers(app);
 reqHandlerLoader.loadErrorHandlers(app);*/
 
 const server = app.listen(
-  process.env.SERVER_PORT,
+  process.env.PORT || process.env.SERVER_PORT,
   process.env.SERVER_HOST,
   () => {
     console.log(
