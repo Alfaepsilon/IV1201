@@ -63,5 +63,22 @@ class recruitDAO {
     });
     return matchingPerson;
   }
+
+  /**
+     * Inserts a new person into the database with parameter values
+     * @param {String} name The name of the user.
+     * @param {String}  surname The surname of our user.
+     * @param {String}  email The mail address of our user.
+     * @param {String} pnr The personal number of our user.
+     * @param {String}  password The password of our user.
+     * @param {String}  role_id The role identification of our user.
+     */
+  async register(name, surname, email, pnr, username, password, role_id) //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
+  {
+    await Person.create(
+      {name: name, surname: surname, email: email, pnr: pnr, username: username, password: password, role_id: role_id}
+    );
+  }
+
 }
-module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO };
+module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register };

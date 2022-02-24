@@ -1,4 +1,3 @@
-'use strict';
 const Sequelize = require('sequelize');
 class Person extends Sequelize.Model {
   static createModel(sequelize) {
@@ -11,22 +10,40 @@ class Person extends Sequelize.Model {
       {
         person_id: {
           type: Sequelize.INTEGER,
-          primaryKey: true
+          primaryKey: true,
+          allowNull: false
         },
         username: {
           type: Sequelize.STRING,
-          allowNull: false,
+          allowNull: true,
         },
         password: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        surname: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        pnr: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        email: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        role_id: {
           type: Sequelize.STRING,
           allowNull: false,
         }
       },
       { sequelize, modelName: 'person', paranoid: true, freezeTableName: true, timestamps: false }
     );
-    console.log("person logged!")
     return Person;
   }
 }
-
-module.exports = { Person: Person, createModel: Person.createModel };
