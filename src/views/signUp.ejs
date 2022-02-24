@@ -15,6 +15,10 @@
 			font-size: 24px;
 			padding: 20px 0 20px 0;
 		}
+		.signUp-form h3 {
+			text-align: center;
+			color: #a72424;
+		}
 		.signUp-form input[type="password"],
 		.signUp-form input[type="text"] {
 			width: 100%;
@@ -36,9 +40,18 @@
 		</style>
 	</head>
 	<body>
-        
+        <% if (errorMsg) {%>
+			<div>
+				Sorry try again
+			</div>
+			<%}%>
 		<div class="signUp-form">
 			<h1>signUp Form</h1>
+			<% if (errorMsg) {%>
+				<div>
+					<h3>Sorry try again</h3>
+				</div>
+				<%}%>
 			<form action="/signUp" method="POST">
 				<input type="text" id="username" name="username" placeholder="User name" required>
 				<input type="text" id="fname" name="fname" placeholder="First name" required>

@@ -45,12 +45,12 @@ app.post('/signUp', async (req, res) => {
   if (isregisterd){
     return res.render('login',{isregisterd:isregisterd})
   }else{
-    return res.render('signUp')
+    return res.render('signUp',{errorMsg:true})
   }
 });
 
 app.get('/signUp', (req, res) => {
-  return res.render('signUp')
+  return res.render('signUp',{errorMsg:false})
 });
 
 app.post('/auth', async (req, res) => {
