@@ -42,9 +42,8 @@ app.post('/auth', (req, res) => {
   // res.send(`Welcome ${req.body.username} to the API`);
 });
 
-/*const reqHandlerLoader = require('./api');
-reqHandlerLoader.loadHandlers(app);
-reqHandlerLoader.loadErrorHandlers(app);*/
+const HandlerLoader = require('./views')
+HandlerLoader.loadErrorHandlers(app)
 
 const server = app.listen(
   process.env.SERVER_PORT,

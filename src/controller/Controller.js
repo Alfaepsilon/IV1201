@@ -26,6 +26,7 @@ class Controller {
      */
 
   async login(username, password) {
+    throw new Error("test")
     console.log(username);
     console.log(password);
     try {
