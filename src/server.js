@@ -39,9 +39,9 @@ app.post('/signUp', async (req, res) => {
   var email = req.body.email
   var password = req.body.password
   var username = req.body.username
-  var roleid = req.body.roleid
+  // var roleid = req.body.roleid
   
-  var isregisterd =  await this.Controller.register(fname, lname, email, pn, username, password, roleid)
+  var isregisterd =  await this.Controller.register(fname, lname, email, pn, username, password, 2)
   if (isregisterd){
     return res.render('login',{isregisterd:isregisterd})
   }else{
