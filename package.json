@@ -3,17 +3,18 @@
   "version": "0.0.1",
   "description": "JSON file contaning frameworks to be used",
   "author": "Henrik Cassé",
-  "license": "",
+  "license": "ISC",
   "main": "src/server.js",
   "scripts": {
-    "start-dev": "NODE_ENV=development && node_modules/nodemon/bin/nodemon.js src/server",
-    "start": "NODE_ENV=production && node_modules/nodemon/bin/nodemon.js src/server"
+    "start-dev": "SET NODE_ENV=development & nodemon src/server",
+    "start": "SET NODE_ENV=production & nodemon src/server"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cls-hooked": "^4.2.2",
     "cookie-parser": "^1.4.4",
     "dotenv-safe": "^8.1.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-validator": "6.1.1",
     "jsonwebtoken": "^8.5.1",
@@ -25,5 +26,13 @@
   },
   "devDependencies": {
     "mysql": "^2.17.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alfaepsilon/IV1201.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfaepsilon/IV1201/issues"
+  },
+  "homepage": "https://github.com/Alfaepsilon/IV1201#readme"
 }

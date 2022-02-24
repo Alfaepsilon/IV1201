@@ -1,0 +1,29 @@
+2022-01-28:
+Betyg: E (Ingen i gruppen har krav att nå högre)
+Språk: Express JS (JavaScript) (Alla i gruppen är bekanta med JavaScript) 
+Möten: 3ggr/veckan Kl. 13:00 (En bra frekvens för mötena och klockan 13:00 passade alla) 
+
+2022-01-31:
+Amiran: Databas; Henrik: Logik; Bushraa: View;
+
+2022-02-11:
+Standard för kommentering av funktioner följer följande mall:
+/**
+* Description of function
+* @param {Type} Parameter
+* @return {Type} Return value
+*/
+Use Sequalize for database.
+Use ejs for view.
+
+2022-02-14:
+Amiran: Security.
+Bushraa: Sign up view och skapa ny "dummy view" för testning av authorization.
+Henrik: Error Handler, Cloud.
+New usecase: Registration
+Get the application up on the cloud. (Heroku)
+Error handler.
+Add encryption to password in database.
+Fix authorization.
+Better README on git
+Better documentation (architectural descisions and program documentation).

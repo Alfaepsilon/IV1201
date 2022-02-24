@@ -58,3 +58,9 @@ typings/
 
 #Unnecesary to push lock.json
 package-lock.json
+
+#Windows specific for Amiran
+package.json
+
+#Gitignoreception
+.gitignore
