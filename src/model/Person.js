@@ -7,17 +7,42 @@ class Person extends Sequelize.Model {
    * @return {Model} A sequelize model describing the Person entity.
    */
     Person.init(
-        {
-          username: {
-            type: Sequelize.STRING,
-            allowNull: false,
-          },
-          password: {
-              type: Sequelize.STRING,
-              allowNull: false,
-          }
+      {
+        person_id: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+          allowNull: false
         },
-        {sequelize, modelName: 'person', paranoid: true}
+        username: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        password: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        surname: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        pnr: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        email: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        role_id: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        }
+      },
+      { sequelize, modelName: 'person', paranoid: true, freezeTableName: true, timestamps: false }
     );
     return Person;
   }
