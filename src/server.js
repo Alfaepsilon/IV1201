@@ -27,22 +27,45 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(APP_ROOT_DIR, 'public')));
 
-app.get('/', (req, res) => {
-  this.Controller.register("Johan", "J", "a", 2, "awd", "awd", 2)
-  return res.render('login')
+app.get('/', async (req, res) => {
+  // await this.Controller.register("Johan", "J", "a", 2, "awd", "awd", 2)
+  return res.render('login',{isregisterd:false})
 });
-app.post('/auth', (req, res) => {
-  console.log(req.body)
+
+app.post('/signUp', async (req, res) => {
+  var fname = req.body.fname
+  var lname = req.body.lname
+  var pn = req.body.pn
+  var email = req.body.email
+  var password = req.body.password
+  var username = req.body.username
+  var roleid = req.body.roleid
+  
+  var isregisterd =  await this.Controller.register(fname, lname, email, pn, username, password, roleid)
+  if (isregisterd){
+    return res.render('login',{isregisterd:isregisterd})
+  }else{
+    return res.render('signUp')
+  }
+});
+
+app.get('/signUp', (req, res) => {
+  return res.render('signUp')
+});
+
+app.post('/auth', async (req, res) => {
+  // console.log(req.body)
   var json = {
     user: req.body.username,
     pass: req.body.password
   }
-  var loggedIn = this.Controller.login(req.body.username, req.body.password)
-  console.log(loggedIn);
-  res.json(json)
+  var loggedIn = await this.Controller.login(req.body.username, req.body.password)
+  
+  // res.json(json);
+  return res.render('dummyView',{loggedIn:loggedIn})
+
   // res.send(`Welcome ${req.body.username} to the API`);
 });
-
 /*const reqHandlerLoader = require('./api');
 reqHandlerLoader.loadHandlers(app);
 reqHandlerLoader.loadErrorHandlers(app);*/

@@ -78,6 +78,10 @@ class recruitDAO {
     await Person.create(
       { name: name, surname: surname, email: email, pnr: pnr, username: username, password: password, role_id: role_id }
     );
+    var isCreated = await Person.findAll({
+      where: { name: name, surname: surname, email: email, pnr: pnr, username: username, password: password, role_id: role_id }
+    });
+    return isCreated
   }
 
 }

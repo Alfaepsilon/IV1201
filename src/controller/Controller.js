@@ -53,7 +53,16 @@ class Controller {
      * @param {String}  role_id The role identification of our user.
      */
   async register(name, surname, email, pnr, username, password, role_id) {
-    try { await this.recruitDAO.register(name, surname, email, pnr, username, password, role_id); }
+    try {
+       var isCreated = await this.recruitDAO.register(name, surname, email, pnr, username, password, role_id);
+       if (Object.keys(isCreated).length >= 1) {
+        console.log(true);
+        return true
+      } else {
+        console.log(false)
+        return false;
+      }
+    }
     catch (error) { console.log(error); }
   }
 }
