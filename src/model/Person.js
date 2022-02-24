@@ -8,11 +8,6 @@ class Person extends Sequelize.Model {
    */
     Person.init(
       {
-        person_id: {
-          type: Sequelize.INTEGER,
-          primaryKey: true,
-          allowNull: false
-        },
         username: {
           type: Sequelize.STRING,
           allowNull: true,
@@ -31,6 +26,7 @@ class Person extends Sequelize.Model {
         },
         pnr: {
           type: Sequelize.STRING,
+          primaryKey: true,
           allowNull: true,
         },
         email: {
@@ -46,4 +42,7 @@ class Person extends Sequelize.Model {
     );
     return Person;
   }
+
 }
+
+module.exports = { Person: Person, createModel: Person.createModel };

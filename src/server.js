@@ -28,6 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(APP_ROOT_DIR, 'public')));
 
 app.get('/', (req, res) => {
+  this.Controller.register("Johan", "J", "a", 2, "awd", "awd", 2)
   return res.render('login')
 });
 app.post('/auth', (req, res) => {

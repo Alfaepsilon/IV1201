@@ -52,11 +52,10 @@ class Controller {
      * @param {String}  password The password of our user.
      * @param {String}  role_id The role identification of our user.
      */
-  async register(name, surname, email, pnr, username, password, role_id)
-  {
-    try{await this.recruitDAO.register(name, surname, email, pnr, username, password, role_id);}
-    catch(error){console.log(error);}
+  async register(name, surname, email, pnr, username, password, role_id) {
+    try { await this.recruitDAO.register(name, surname, email, pnr, username, password, role_id); }
+    catch (error) { console.log(error); }
   }
 }
 
-module.exports = { Controller: Controller, login: Controller.login, createController: Controller.createController, register: Controller.register};
+module.exports = { Controller: Controller, login: Controller.login, createController: Controller.createController, register: Controller.register };

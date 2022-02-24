@@ -76,7 +76,7 @@ class recruitDAO {
   async register(name, surname, email, pnr, username, password, role_id) //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
   {
     await Person.create(
-      {name: name, surname: surname, email: email, pnr: pnr, username: username, password: password, role_id: role_id}
+      { name: name, surname: surname, email: email, pnr: pnr, username: username, password: password, role_id: role_id }
     );
   }
 
