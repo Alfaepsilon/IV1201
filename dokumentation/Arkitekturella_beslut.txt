@@ -27,3 +27,6 @@ Add encryption to password in database.
 Fix authorization.
 Better README on git
 Better documentation (architectural descisions and program documentation).
+
+2022-02-24
+Encryption: bcrypt.
