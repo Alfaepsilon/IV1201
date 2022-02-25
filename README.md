@@ -23,6 +23,11 @@ The following frameworks are used.
 - dotenv-safe
 - express-validator
 - verror
+- bcrypt
+- pg-promise
+- cls-hooked
+- ejs
+- nodemon
 
 ## Installation
 
