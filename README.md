@@ -42,6 +42,9 @@ The following frameworks are used.
 - ejs
 - nodemon
 
+### Deployment
+The application is deployed to a cloud service. The service in question is Heroku.
+
 ## Usage
 
 ### Installation
