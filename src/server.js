@@ -33,15 +33,18 @@ app.get('/', async (req, res) => {
 });
 
 app.post('/signUp', async (req, res) => {
-  var fname = req.body.fname
-  var lname = req.body.lname
-  var pn = req.body.pn
-  var email = req.body.email
-  var password = req.body.password
-  var username = req.body.username
-  // var roleid = req.body.roleid
+
+  var user = {
+  name: req.body.fname,
+  surname: req.body.lname,
+  pnr: req.body.pn,
+  email: req.body.email,
+  password: req.body.password,
+  username: req.body.username,
+  role_id: 2
+  };
   
-  var isregisterd =  await this.Controller.register(fname, lname, email, pn, username, password, 2)
+  var isregisterd =  await this.Controller.register(user)
   if (isregisterd){
     return res.render('login',{isregisterd:isregisterd})
   }else{

@@ -52,16 +52,29 @@ class recruitDAO {
 
   async login(username, password) {
     console.log("Logging in!");
-    /*await Person.sync({ force: false }).then(function () {
-      Person.create({
-        username: username,
-        password: password
-      })
-    }); */
-    var matchingPerson = await Person.findAll({
-      where: { username: username, password: password }
+    var matchingPersons = await Person.findAll({
+      where: { username: username}
     });
-    return matchingPerson;
+    var check = false;
+    var matchingPerson;
+    for (let i = 0; i < Object.keys(matchingPersons).length; i++){
+      console.log(matchingPersons[i].get('password'));
+      if(Person.validPassword(password, matchingPersons[i].get('password')))
+      {
+        matchingPerson = matchingPersons[i].get({plain: true});
+        check = true;
+      }
+    }
+    if(check)
+    {
+      console.log("valid");
+      return matchingPersons;
+    }
+    else
+    {
+      console.log("invalid");
+      return [];
+    }
   }
 
   /**
@@ -73,13 +86,13 @@ class recruitDAO {
      * @param {String}  password The password of our user.
      * @param {String}  role_id The role identification of our user.
      */
-  async register(name, surname, email, pnr, username, password, role_id) //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
+  async register(user) //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
   {
     await Person.create(
-      { name: name, surname: surname, email: email, pnr: pnr, username: username, password: password, role_id: role_id }
+      { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, password: user.password, role_id: user.role_id }
     );
     var isCreated = await Person.findAll({
-      where: { name: name, surname: surname, email: email, pnr: pnr, username: username, password: password, role_id: role_id }
+      where: { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, role_id: user.role_id }
     });
     return isCreated
   }
