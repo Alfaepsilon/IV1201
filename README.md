@@ -8,7 +8,6 @@ The following software development tools are used.
 
 - Version control (Git)
 - Project management (npm)
-- Automatic restart (nodemon)
 
 ## Frameworks
 
@@ -31,11 +30,7 @@ Install node.js, clone this git repository and install all required npm packages
 
 ## Start the Application
 
-The repository contains only a REST api, no client. The API can be tried by using for example *insomnia*, [https://insomnia.rest/]
-
 1. Copy the file `.env.example` to a file called `.env` and specify values for all settings.
 1. Create the database. You do not have to create any tables in the database, they will be created by the application.
 1. Start the application by giving the command `npm run start-dev` in the `server` directory.
-1. Start insomnia
-1. Import the file `insomnia-chat-api-requests.json`, which will populate insomnia with all requests that can be made to tha chat api.
  
