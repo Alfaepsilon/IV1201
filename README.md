@@ -32,5 +32,5 @@ Install node.js, clone this git repository and install all required npm packages
 
 1. Copy the file `.env.example` to a file called `.env` and specify values for all settings.
 1. Create the database. You do not have to create any tables in the database, they will be created by the application.
-1. Start the application by giving the command `npm run start-dev` in the `server` directory.
+1. Start the application by giving the command `npm run start-dev` in the `root` directory.
  
