@@ -35,11 +35,13 @@ The following frameworks are used.
 - ejs
 - nodemon
 
-## Installation
+## Usage
+
+### Installation
 
 Install node.js, clone this git repository and install all required npm packages by giving the command `npm install` in the root directory.
 
-## Start the Application
+### Start the Application
 
 1. Copy the file `.env.example` to a file called `.env` and specify values for all settings.
 1. Create the database. You do not have to create any tables in the database, they will be created by the application.
