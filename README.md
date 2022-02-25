@@ -2,6 +2,11 @@
 
 This is the project in the course IV1201 for Group 9. The application is a sort of recruitment system for an made up amusement park. Users can sign in, sign up etc. The application is Client-Side rendered and we use a Monolithic Architecture. 
 
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Usage](#usage)
+
 ## Technologies
 
 ### Languages
