@@ -1,15 +1,21 @@
 # Group 9 Project
 
-This is the project in the course IV1201 for Group 9. Client-Side Rendering with a Monolithic Architecture. 
+This is the project in the course IV1201 for Group 9. The application is a sort of recruitment system for an made up amusement park. Users can sign in, sign up etc. The application is Client-Side rendered and we use a Monolithic Architecture. 
 
-## Tools
+##Technologies
+
+###Languages
+- JavaScript 8
+- EJS
+
+### Tools
 
 The following software development tools are used.
 
 - Version control (Git)
 - Project management (npm)
 
-## Frameworks
+### Frameworks
 
 The following frameworks are used.
 
