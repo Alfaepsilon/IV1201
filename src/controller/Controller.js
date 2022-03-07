@@ -42,6 +42,31 @@ class Controller {
       console.log(error);
     }
   }
+
+  /**
+     * Passes login parameters to the DAO
+     * @param {String} name The name of the user.
+     * @param {String}  surname The surname of our user.
+     * @param {String}  email The mail address of our user.
+     * @param {String} pnr The personal number of our user.
+     * @param {String}  password The password of our user.
+     * @param {String}  role_id The role identification of our user.
+     */
+  async register(user) {
+    try {
+       var isCreated = await this.recruitDAO.register(user);
+       console.log(isCreated)
+       console.log(Object.keys(isCreated).length)
+       if (Object.keys(isCreated).length >= 1) {
+        console.log(true);
+        return true
+      } else {
+        console.log(false)
+        return false;
+      }
+    }
+    catch (error) { console.log(error); }
+  }
 }
 
-module.exports = { Controller: Controller, login: Controller.login, createController: Controller.createController };
+module.exports = { Controller: Controller, login: Controller.login, createController: Controller.createController, register: Controller.register };

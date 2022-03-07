@@ -52,16 +52,50 @@ class recruitDAO {
 
   async login(username, password) {
     console.log("Logging in!");
-    /*await Person.sync({ force: false }).then(function () {
-      Person.create({
-        username: username,
-        password: password
-      })
-    }); */
-    var matchingPerson = await Person.findAll({
-      where: { username: username, password: password }
+    var matchingPersons = await Person.findAll({
+      where: { username: username}
     });
-    return matchingPerson;
+    var check = false;
+    var matchingPerson;
+    for (let i = 0; i < Object.keys(matchingPersons).length; i++){
+      console.log(matchingPersons[i].get('password'));
+      if(Person.validPassword(password, matchingPersons[i].get('password')))
+      {
+        matchingPerson = matchingPersons[i].get({plain: true});
+        check = true;
+      }
+    }
+    if(check)
+    {
+      console.log("valid");
+      return matchingPersons;
+    }
+    else
+    {
+      console.log("invalid");
+      return [];
+    }
   }
+
+  /**
+     * Inserts a new person into the database with parameter values
+     * @param {String} name The name of the user.
+     * @param {String}  surname The surname of our user.
+     * @param {String}  email The mail address of our user.
+     * @param {String} pnr The personal number of our user.
+     * @param {String}  password The password of our user.
+     * @param {String}  role_id The role identification of our user.
+     */
+  async register(user) //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
+  {
+    await Person.create(
+      { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, password: user.password, role_id: user.role_id }
+    );
+    var isCreated = await Person.findAll({
+      where: { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, role_id: user.role_id }
+    });
+    return isCreated
+  }
+
 }
-module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO };
+module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register };
