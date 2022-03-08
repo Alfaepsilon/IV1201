@@ -29,31 +29,31 @@ app.use(express.static(path.join(APP_ROOT_DIR, 'public')));
 
 app.get('/', async (req, res) => {
   // await this.Controller.register("Johan", "J", "a", 2, "awd", "awd", 2)
-  return res.render('login',{isregisterd:false})
+  return res.render('login', { isregisterd: false })
 });
 
 app.post('/signUp', async (req, res) => {
 
   var user = {
-  name: req.body.fname,
-  surname: req.body.lname,
-  pnr: req.body.pn,
-  email: req.body.email,
-  password: req.body.password,
-  username: req.body.username,
-  role_id: 2
+    name: req.body.fname,
+    surname: req.body.lname,
+    pnr: req.body.pn,
+    email: req.body.email,
+    password: req.body.password,
+    username: req.body.username,
+    role_id: 2
   };
-  
-  var isregisterd =  await this.Controller.register(user)
-  if (isregisterd){
-    return res.render('login',{isregisterd:isregisterd})
-  }else{
-    return res.render('signUp',{errorMsg:true})
+
+  var isregisterd = await this.Controller.register(user)
+  if (isregisterd) {
+    return res.render('login', { isregisterd: isregisterd })
+  } else {
+    return res.render('signUp', { errorMsg: true })
   }
 });
 
 app.get('/signUp', (req, res) => {
-  return res.render('signUp',{errorMsg:false})
+  return res.render('signUp', { errorMsg: false })
 });
 
 app.post('/auth', async (req, res) => {
@@ -63,9 +63,9 @@ app.post('/auth', async (req, res) => {
     pass: req.body.password
   }
   var loggedIn = await this.Controller.login(req.body.username, req.body.password)
-  
+
   // res.json(json);
-  return res.render('dummyView',{loggedIn:loggedIn})
+  return res.render('dummyView', { loggedIn: loggedIn })
 
   // res.send(`Welcome ${req.body.username} to the API`);
 });
@@ -75,7 +75,7 @@ reqHandlerLoader.loadErrorHandlers(app);*/
 
 var port = process.env.PORT || process.env.SERVER_PORT
 const server = app.listen(
-  port ,
+  port,
   process.env.SERVER_HOST,
   () => {
     console.log(
