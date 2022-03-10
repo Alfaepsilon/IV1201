@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const cls = require('cls-hooked');
 const Person = require('../model/Person').Person;
 /* This class is responsible for all database calls.
  */
@@ -7,6 +8,8 @@ class recruitDAO {
    */
   constructor() {
     //Environment variables initializes the sequelize database.
+    const ns = cls.createNamespace(DB_NAME);
+    Sequelize.useCLS(ns);
     this.database = new Sequelize(
       process.env.DB_NAME,
       process.env.DB_USER,

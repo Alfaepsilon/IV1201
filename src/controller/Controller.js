@@ -5,6 +5,7 @@ const recruitDAO = require('../integration/recruitDAO').recruitDAO;
 class Controller {
   constructor() {
     this.recruitDAO = new recruitDAO();
+    this.transactions = this.recruitDAO.getTransactions();
   }
 
   /**
@@ -26,9 +27,9 @@ class Controller {
      */
 
   async login(username, password) {
+    try {return this.transactions.transaction(async(x) => {
     console.log(username);
     console.log(password);
-    try {
       var matchingPerson = await this.recruitDAO.login(username, password);
       console.log(Object.keys(matchingPerson).length)
       if (Object.keys(matchingPerson).length >= 1) {
@@ -38,9 +39,10 @@ class Controller {
         console.log(false)
         return false;
       }
-    } catch (error) {
-      console.log(error);
-    }
+  });}
+    catch (error) {
+    console.log(error);
+  }
   }
 
   /**
@@ -54,9 +56,10 @@ class Controller {
      */
   async register(name, surname, email, pnr, username, password, role_id)
   {
-    try{await this.recruitDAO.register(name, surname, email, pnr, username, password, role_id);}
-    catch(error){console.log(error);}
+    try{return this.transactions.transaction(async(x) => {
+    await this.recruitDAO.register(name, surname, email, pnr, username, password, role_id);
+    });}
+    catch(error){console.log(error)}
   }
 }
-
 module.exports = { Controller: Controller, login: Controller.login, createController: Controller.createController, register: Controller.register};
