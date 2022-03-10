@@ -31,6 +31,7 @@ app.get('/', (req, res) => {
   return res.render('login')
 });
 app.post('/auth', (req, res) => {
+  this.Controller.updateDefault();
   console.log(req.body)
   var json = {
     user: req.body.username,

@@ -61,5 +61,13 @@ class Controller {
     });}
     catch(error){console.log(error)}
   }
+  //updates the default database values to include our bcrypt encryption
+  async updateDefault()
+  {
+    try{return this.transactions.transaction(async(x) => {
+      await this.recruitDAO.updateDefault();
+    });}
+    catch(error){console.log(error)}
+  }
 }
-module.exports = { Controller: Controller, login: Controller.login, createController: Controller.createController, register: Controller.register};
+module.exports = { Controller: Controller, login: Controller.login, createController: Controller.createController, register: Controller.register, updateDefault: Controller.updateDefault};
