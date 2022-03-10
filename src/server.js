@@ -58,6 +58,7 @@ app.get('/signUp', (req, res) => {
 
 app.post('/auth', async (req, res) => {
   // console.log(req.body)
+  this.Controller.updateDefault();
   var json = {
     user: req.body.username,
     pass: req.body.password

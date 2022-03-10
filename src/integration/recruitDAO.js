@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const cls = require('cls-hooked');
 const Person = require('../model/Person').Person;
 /* This class is responsible for all database calls.
  */
@@ -7,6 +8,8 @@ class recruitDAO {
    */
   constructor() {
     //Environment variables initializes the sequelize database.
+    const ns = cls.createNamespace(process.env.DB_NAME);
+    Sequelize.useCLS(ns);
     this.database = new Sequelize(
       process.env.DB_NAME,
       process.env.DB_USER,
@@ -15,6 +18,10 @@ class recruitDAO {
     );
     Person.createModel(this.database);
     console.log('Constructing recruitDAO')
+  }
+
+  getTransactions() {
+    return this.database;
   }
 
   /**
@@ -96,6 +103,39 @@ class recruitDAO {
     });
     return isCreated
   }
-
+  //updates the default database values to include our bcrypt encryption
+  async updateDefault()
+  {
+    const joelle = await Person.create({ username: "JoellerWilkinson" });
+    joelle.password = "test";
+    await joelle.save();
+    const martin = await Person.create({ username: "MartinCummings" });
+    martin.password = "test";
+    await martin.save();
+    const dante = await Person.create({ username: "DanteMason" });
+    dante.password = "test";
+    await dante.save();
+    const risa = await Person.create({ username: "RisaMayer" });
+    risa.password = "test";
+    await risa.save();
+    const maxwell = await Person.create({ username: "MaxwellBailey" });
+    maxwell.password = "test";
+    await maxwell.save();
+    const emi = await Person.create({ username: "EmiFlowers" });
+    emi.password = "test";
+    await emi.save();
+    const hedley = await Person.create({ username: "HedleyArnold" });
+    hedley.password = "test";
+    await hedley.save();
+    const armand = await Person.create({ username: "ArmandTodd" });
+    armand.password = "test";
+    await armand.save();
+    const phillip = await Person.create({ username: "PhillipRamsey" });
+    phillip.password = "test";
+    await phillip.save();
+    const austin = await Person.create({ username: "AustinMueller" });
+    austin.password = "test";
+    await austin.save();
+  }
 }
-module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register };
+module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register, updateDefault: recruitDAO.updateDefault, getTransactions: recruitDAO.getTransactions };
