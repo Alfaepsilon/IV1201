@@ -20,6 +20,10 @@ class recruitDAO {
     console.log('Constructing recruitDAO')
   }
 
+  getTransactions() {
+    return this.database;
+  }
+
   /**
      * Returns true if the function matches a person's parameters
      * @param {String} username The username of the user.
@@ -55,16 +59,29 @@ class recruitDAO {
 
   async login(username, password) {
     console.log("Logging in!");
-    /*await Person.sync({ force: false }).then(function () {
-      Person.create({
-        username: username,
-        password: password
-      })
-    }); */
-    var matchingPerson = await Person.findAll({
-      where: { username: username, password: password }
+    var matchingPersons = await Person.findAll({
+      where: { username: username}
     });
-    return matchingPerson;
+    var check = false;
+    var matchingPerson;
+    for (let i = 0; i < Object.keys(matchingPersons).length; i++){
+      console.log(matchingPersons[i].get('password'));
+      if(Person.validPassword(password, matchingPersons[i].get('password')))
+      {
+        matchingPerson = matchingPersons[i].get({plain: true});
+        check = true;
+      }
+    }
+    if(check)
+    {
+      console.log("valid");
+      return matchingPersons;
+    }
+    else
+    {
+      console.log("invalid");
+      return [];
+    }
   }
 
   /**
@@ -76,45 +93,39 @@ class recruitDAO {
      * @param {String}  password The password of our user.
      * @param {String}  role_id The role identification of our user.
      */
-  async register(name, surname, email, pnr, username, password, role_id) //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
+  async register(user) //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
   {
     await Person.create(
-      {name: name, surname: surname, email: email, pnr: pnr, username: username, password: password, role_id: role_id}
+      { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, password: user.password, role_id: user.role_id }
     );
+    var isCreated = await Person.findAll({
+      where: { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, role_id: user.role_id }
+    });
+    return isCreated
   }
   //updates the default database values to include our bcrypt encryption
   async updateDefault()
   {
-    const joelle = await Person.create({ username: "JoellerWilkinson" });
-    joelle.password = "test";
-    await joelle.save();
-    const martin = await Person.create({ username: "MartinCummings" });
-    martin.password = "test";
-    await martin.save();
-    const dante = await Person.create({ username: "DanteMason" });
-    dante.password = "test";
-    await dante.save();
-    const risa = await Person.create({ username: "RisaMayer" });
-    risa.password = "test";
-    await risa.save();
-    const maxwell = await Person.create({ username: "MaxwellBailey" });
-    maxwell.password = "test";
-    await maxwell.save();
-    const emi = await Person.create({ username: "EmiFlowers" });
-    emi.password = "test";
-    await emi.save();
-    const hedley = await Person.create({ username: "HedleyArnold" });
-    hedley.password = "test";
-    await hedley.save();
-    const armand = await Person.create({ username: "ArmandTodd" });
-    armand.password = "test";
-    await armand.save();
-    const phillip = await Person.create({ username: "PhillipRamsey" });
-    phillip.password = "test";
-    await phillip.save();
-    const austin = await Person.create({ username: "AustinMueller" });
-    austin.password = "test";
-    await austin.save();
+    await Person.update({password: "LiZ98qvL8Lw"},
+    {where: {username: "JoelleWilkinson" }});
+    await Person.update({password: "QkK48drV2Da"},
+    {where: {username: "MartinCummings" }});
+    await Person.update({password: "EyD84euX5Nj"},
+    {where: {username: "DanteMason" }});
+    await Person.update({password: "VdE34mqY2Xy"},
+    {where: {username: "RisaMayer" }});
+    await Person.update({password: "NmK87boS4Lf"},
+    {where: {username: "MaxwellBailey" }});
+    await Person.update({password: "LqK20ygU3Lw"},
+    {where: {username: "EmiFlowers" }});
+    await Person.update({password: "OjP41mkY3Vb"},
+    {where: {username: "HedleyArnold" }});
+    await Person.update({password: "LbH38urF4Kn"},
+    {where: {username: "ArmandTodd" }});
+    await Person.update({password: "XoH15hnY3Bw"},
+    {where: {username: "PhillipRamsey" }});
+    await Person.update({password: "MvZ46kfC1Kr"},
+    {where: {username: "AustinMueller" }});
   }
 }
-module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register, updateDefault: recruitDAO.updateDefault };
+module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register, updateDefault: recruitDAO.updateDefault, getTransactions: recruitDAO.getTransactions };

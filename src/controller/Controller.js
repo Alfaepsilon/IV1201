@@ -26,7 +26,7 @@ class Controller {
      * @return {Boolean} Indicating succesful or unsuccesful login
      */
 
-  async login(username, password) {
+   async login(username, password) {
     try {return this.transactions.transaction(async(x) => {
     console.log(username);
     console.log(password);
@@ -54,20 +54,21 @@ class Controller {
      * @param {String}  password The password of our user.
      * @param {String}  role_id The role identification of our user.
      */
-  async register(name, surname, email, pnr, username, password, role_id)
-  {
-    try{return this.transactions.transaction(async(x) => {
-    await this.recruitDAO.register(name, surname, email, pnr, username, password, role_id);
-    });}
-    catch(error){console.log(error)}
-  }
-  //updates the default database values to include our bcrypt encryption
-  async updateDefault()
-  {
-    try{return this.transactions.transaction(async(x) => {
-      await this.recruitDAO.updateDefault();
-    });}
-    catch(error){console.log(error)}
-  }
+   async register(name, surname, email, pnr, username, password, role_id)
+   {
+     try{return this.transactions.transaction(async(x) => {
+     await this.recruitDAO.register(name, surname, email, pnr, username, password, role_id);
+     });}
+     catch(error){console.log(error)}
+   }
+   //updates the default database values to include our bcrypt encryption
+   async updateDefault()
+   {
+     try{return this.transactions.transaction(async(x) => {
+       await this.recruitDAO.updateDefault();
+     });}
+     catch(error){console.log(error)}
+   }
 }
+
 module.exports = { Controller: Controller, login: Controller.login, createController: Controller.createController, register: Controller.register, updateDefault: Controller.updateDefault};
