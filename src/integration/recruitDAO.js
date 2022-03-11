@@ -106,27 +106,26 @@ class recruitDAO {
   //updates the default database values to include our bcrypt encryption
   async updateDefault()
   {
-    await Person.update({password: "test"},
+    await Person.update({password: "LiZ98qvL8Lw"},
     {where: {username: "JoelleWilkinson" }});
-    await Person.update({password: "test"},
-    {where: {username: "DanteMason" }});
-    await Person.update({password: "test"},
-    {where: {username: "RisaMayer" }});
-    await Person.update({password: "test"},
-    {where: {username: "MaxwellBailey" }});
-    await Person.update({password: "test"},
-    {where: {username: "EmiFlowers" }});
-    await Person.update({password: "test"},
-    {where: {username: "HedleyArnold" }});
-    await Person.update({password: "test"},
-    {where: {username: "ArmandTodd" }});
-    await Person.update({password: "test"},
-    {where: {username: "PhillipRamsey" }});
-    await Person.update({password: "test"},
-    {where: {username: "AustinMueller" }});
-    await Person.update({password: "test"},
+    await Person.update({password: "QkK48drV2Da"},
     {where: {username: "MartinCummings" }});
-    console.log("updated defaults");
+    await Person.update({password: "EyD84euX5Nj"},
+    {where: {username: "DanteMason" }});
+    await Person.update({password: "VdE34mqY2Xy"},
+    {where: {username: "RisaMayer" }});
+    await Person.update({password: "NmK87boS4Lf"},
+    {where: {username: "MaxwellBailey" }});
+    await Person.update({password: "LqK20ygU3Lw"},
+    {where: {username: "EmiFlowers" }});
+    await Person.update({password: "OjP41mkY3Vb"},
+    {where: {username: "HedleyArnold" }});
+    await Person.update({password: "LbH38urF4Kn"},
+    {where: {username: "ArmandTodd" }});
+    await Person.update({password: "XoH15hnY3Bw"},
+    {where: {username: "PhillipRamsey" }});
+    await Person.update({password: "MvZ46kfC1Kr"},
+    {where: {username: "AustinMueller" }});
   }
 }
 module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register, updateDefault: recruitDAO.updateDefault, getTransactions: recruitDAO.getTransactions };
