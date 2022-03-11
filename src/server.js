@@ -27,6 +27,8 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(APP_ROOT_DIR, 'public')));
 
+this.Controller.updateDefault();
+
 app.get('/', async (req, res) => {
   // await this.Controller.register("Johan", "J", "a", 2, "awd", "awd", 2)
   return res.render('login',{isregisterd:false})
@@ -58,7 +60,6 @@ app.get('/signUp', (req, res) => {
 
 app.post('/auth', async (req, res) => {
   // console.log(req.body)
-  this.Controller.updateDefault();
   var json = {
     user: req.body.username,
     pass: req.body.password

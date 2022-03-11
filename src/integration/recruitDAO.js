@@ -106,36 +106,27 @@ class recruitDAO {
   //updates the default database values to include our bcrypt encryption
   async updateDefault()
   {
-    const joelle = await Person.create({ username: "JoellerWilkinson" });
-    joelle.password = "test";
-    await joelle.save();
-    const martin = await Person.create({ username: "MartinCummings" });
-    martin.password = "test";
-    await martin.save();
-    const dante = await Person.create({ username: "DanteMason" });
-    dante.password = "test";
-    await dante.save();
-    const risa = await Person.create({ username: "RisaMayer" });
-    risa.password = "test";
-    await risa.save();
-    const maxwell = await Person.create({ username: "MaxwellBailey" });
-    maxwell.password = "test";
-    await maxwell.save();
-    const emi = await Person.create({ username: "EmiFlowers" });
-    emi.password = "test";
-    await emi.save();
-    const hedley = await Person.create({ username: "HedleyArnold" });
-    hedley.password = "test";
-    await hedley.save();
-    const armand = await Person.create({ username: "ArmandTodd" });
-    armand.password = "test";
-    await armand.save();
-    const phillip = await Person.create({ username: "PhillipRamsey" });
-    phillip.password = "test";
-    await phillip.save();
-    const austin = await Person.create({ username: "AustinMueller" });
-    austin.password = "test";
-    await austin.save();
+    await Person.update({password: "test"},
+    {where: {username: "JoelleWilkinson" }});
+    await Person.update({password: "test"},
+    {where: {username: "DanteMason" }});
+    await Person.update({password: "test"},
+    {where: {username: "RisaMayer" }});
+    await Person.update({password: "test"},
+    {where: {username: "MaxwellBailey" }});
+    await Person.update({password: "test"},
+    {where: {username: "EmiFlowers" }});
+    await Person.update({password: "test"},
+    {where: {username: "HedleyArnold" }});
+    await Person.update({password: "test"},
+    {where: {username: "ArmandTodd" }});
+    await Person.update({password: "test"},
+    {where: {username: "PhillipRamsey" }});
+    await Person.update({password: "test"},
+    {where: {username: "AustinMueller" }});
+    await Person.update({password: "test"},
+    {where: {username: "MartinCummings" }});
+    console.log("updated defaults");
   }
 }
 module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register, updateDefault: recruitDAO.updateDefault, getTransactions: recruitDAO.getTransactions };
