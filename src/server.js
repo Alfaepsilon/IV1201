@@ -5,6 +5,7 @@ const APP_ROOT_DIR = path.join(__dirname, '..');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const Controller = require('./controller/Controller').Controller;
+const Authorization = require('./api/Authorization').Authorization;
 const result = require('dotenv-safe').config({
   path: path.join(APP_ROOT_DIR, '.env'),
   example: path.join(APP_ROOT_DIR, '.env'),
@@ -13,6 +14,7 @@ const result = require('dotenv-safe').config({
 
 const app = express();
 this.Controller = new Controller();
+this.Authorization = new Authorization();
 
 const bodyParser = require('body-parser');
 const { Console } = require('console');
@@ -65,7 +67,9 @@ app.post('/auth', async (req, res) => {
     pass: req.body.password
   }
   var loggedIn = await this.Controller.login(req.body.username, req.body.password)
-  
+  await this.Authorization.signLogin(req, res);
+  var loggedIn2 = await this.Authorization.authLogin(this.Controller, req, res);
+  console.log(loggedIn2);
   // res.json(json);
   return res.render('dummyView',{loggedIn:loggedIn})
 
