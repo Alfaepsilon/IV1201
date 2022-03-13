@@ -34,6 +34,7 @@ class Authorization {
         {
             console.log(err);
             res.clearCookie('authCookie');
+            this.signLogin(req, res);
             return false;
         }
         });
