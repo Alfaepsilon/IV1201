@@ -21,6 +21,7 @@ The following software development tools are used.
 
 - Version control (Git)
 - Project management (npm)
+- Cloud (Heroku)
 
 ### Frameworks
 
