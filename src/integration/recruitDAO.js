@@ -1,6 +1,9 @@
 const Sequelize = require('sequelize');
 const cls = require('cls-hooked');
 const Person = require('../model/Person').Person;
+const Availability = require('../model/Availability').Availability;
+const Competence = require('../model/Competence').Competence;
+const Competence_profile = require('../model/Competence_profile').Competence_profile;
 /* This class is responsible for all database calls.
  */
 class recruitDAO {
@@ -17,7 +20,10 @@ class recruitDAO {
       { host: process.env.DB_HOST, dialect: process.env.DB_DIALECT }
     );
     Person.createModel(this.database);
-    console.log('Constructing recruitDAO')
+    Availability.createModel(this.database);
+    Competence.createModel(this.database);
+    Competence_profile.createModel(this.database);
+    console.log('Constructing recruitDAO');
   }
 
   getTransactions() {
@@ -127,5 +133,24 @@ class recruitDAO {
     await Person.update({password: "MvZ46kfC1Kr"},
     {where: {username: "AustinMueller" }});
   }
+
+  async showCompetences()
+  {
+    var competences = await Competence.findAll();
+    const array = [];
+    for (let i = 0; i < Object.keys(competences).length; i++){
+      array.push(matchingPersons[i].get('name'));
+    }
+    return array;
+  }
+
+  async jobSubmission(person_id, competence_id, from_date, to_date, years_of_experience)
+  {
+    await Availability.create(
+      { person_id: person_id, from_date: from_date, to_date: to_date });
+    await Competence_profile.create(
+      { person_id: person_id, competence_id: competence_id, years_of_experience: years_of_experience });
+  }
+
 }
 module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register, updateDefault: recruitDAO.updateDefault, getTransactions: recruitDAO.getTransactions };
