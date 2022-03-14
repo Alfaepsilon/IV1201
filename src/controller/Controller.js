@@ -59,15 +59,40 @@ class Controller {
      * @param {String}  password The password of our user.
      * @param {String}  role_id The role identification of our user.
      */
-   async register(name, surname, email, pnr, username, password, role_id)
+   async register(user)
    {
      try{return this.transactions.transaction(async(x) => {
-     await this.recruitDAO.register(name, surname, email, pnr, username, password, role_id);
+      var isCreated = await this.recruitDAO.register(user);
+      console.log(isCreated)
+      console.log(Object.keys(isCreated).length)
+      if (Object.keys(isCreated).length >= 1) {
+       console.log(true);
+       return true
+     } else {
+       console.log(false)
+       return false;
+     }
      });}
-     catch(error){
-      //  console.log(error)
-      }
+     catch(error){console.log(error)}
    }
+  // /**
+  //    * Passes login parameters to the DAO
+  //    * @param {String} name The name of the user.
+  //    * @param {String}  surname The surname of our user.
+  //    * @param {String}  email The mail address of our user.
+  //    * @param {String} pnr The personal number of our user.
+  //    * @param {String}  password The password of our user.
+  //    * @param {String}  role_id The role identification of our user.
+  //    */
+  //  async register(name, surname, email, pnr, username, password, role_id)
+  //  {
+  //    try{return this.transactions.transaction(async(x) => {
+  //    await this.recruitDAO.register(name, surname, email, pnr, username, password, role_id);
+  //    });}
+  //    catch(error){
+  //     //  console.log(error)
+  //     }
+  //  }
    //updates the default database values to include our bcrypt encryption
    async updateDefault()
    {

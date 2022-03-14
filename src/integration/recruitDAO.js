@@ -32,18 +32,9 @@ class recruitDAO {
       process.env.DB_PASS,
       { host: process.env.DB_HOST, dialect: process.env.DB_DIALECT }
     );
-    this.database.authenticate().then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    // errGen(err)
-      /*
-       * Logs errors to the console.
-       */
-      //   this.logger.logException(err);
-        // res.status(500).send({error: 'Operation failed.' + err});    
-    // console.error('Unable to connect to the database:', err);
-  });
+    Person.createModel(this.database);
+    console.log('Constructing recruitDAO')
+
   }
 
   getTransactions() {
@@ -126,43 +117,67 @@ class recruitDAO {
     // }
   }
 
+  // /**
+  //  * Inserts a new person into the database with parameter values
+  //  * @param {String} name The name of the user.
+  //  * @param {String}  surname The surname of our user.
+  //  * @param {String}  email The mail address of our user.
+  //  * @param {String} pnr The personal number of our user.
+  //  * @param {String}  password The password of our user.
+  //  * @param {String}  role_id The role identification of our user.
+  //  */
+  // async register(
+  //   user //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
+  // ) {
+  //   try {
+  //     await Person.create({
+  //       name: user.name,
+  //       surname: user.surname,
+  //       email: user.email,
+  //       pnr: user.pnr,
+  //       username: user.username,
+  //       password: user.password,
+  //       role_id: user.role_id,
+  //     });
+  //     var isCreated = await Person.findAll({
+  //       where: {
+  //         name: user.name,
+  //         surname: user.surname,
+  //         email: user.email,
+  //         pnr: user.pnr,
+  //         username: user.username,
+  //         role_id: user.role_id,
+  //       },
+  //     });
+  //     return isCreated;
+  //   } catch {
+  //     console.log("Nour3: Error somewhere in register function");
+  //   }
+  // }
   /**
-   * Inserts a new person into the database with parameter values
-   * @param {String} name The name of the user.
-   * @param {String}  surname The surname of our user.
-   * @param {String}  email The mail address of our user.
-   * @param {String} pnr The personal number of our user.
-   * @param {String}  password The password of our user.
-   * @param {String}  role_id The role identification of our user.
-   */
-  async register(
-    user //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
-  ) {
+     * Inserts a new person into the database with parameter values
+     * @param {String} name The name of the user.
+     * @param {String}  surname The surname of our user.
+     * @param {String}  email The mail address of our user.
+     * @param {String} pnr The personal number of our user.
+     * @param {String}  password The password of our user.
+     * @param {String}  role_id The role identification of our user.
+     */
+   async register(user) //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
+   {
     try {
-      await Person.create({
-        name: user.name,
-        surname: user.surname,
-        email: user.email,
-        pnr: user.pnr,
-        username: user.username,
-        password: user.password,
-        role_id: user.role_id,
-      });
-      var isCreated = await Person.findAll({
-        where: {
-          name: user.name,
-          surname: user.surname,
-          email: user.email,
-          pnr: user.pnr,
-          username: user.username,
-          role_id: user.role_id,
-        },
-      });
-      return isCreated;
-    } catch {
-      console.log("Nour3: Error somewhere in register function");
-    }
-  }
+          await Person.create(
+       { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, password: user.password, role_id: user.role_id }
+     );
+     var isCreated = await Person.findAll({
+       where: { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, role_id: user.role_id }
+     });
+     return isCreated
+
+    } catch (error) {
+      throw error;
+    } 
+   }
   //updates the default database values to include our bcrypt encryption
   async updateDefault() {
     try {

@@ -62,7 +62,7 @@ app.get('/', notRequireAuth, async (req, res) => {
   try {
     this.Controller = new Controller();
     await this.Controller.updateDefault();
-    return res.render('login',{isregisterd:false})
+    return res.render('login',{isregisterd:false, isUser:true})
   } catch (error) {
     res.render('error',{err:error})
     console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
@@ -90,7 +90,7 @@ app.post('/signUp', async (req, res) => {
     
     var isregisterd =  await this.Controller.register(user)
     if (isregisterd){
-      return res.render('login',{isregisterd:isregisterd})
+      return res.render('login',{isregisterd:isregisterd,isUser:true})
     }else{
       return res.render('signUp',{errorMsg:true})
     }
@@ -111,12 +111,17 @@ app.get('/auth', requireAuth, async (req, res) => {
 app.post('/auth', async (req, res) => {
   // console.log(req.body)
   try {
-     await this.Controller.login(req.body.username, req.body.password)
-    const token = createToken(req.body.username);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    // res.status(201).json({ user: req.body.username });
-    // res.render('dummyView')
-    res.redirect('/')
+    var isUser = await this.Controller.login(req.body.username, req.body.password)
+    if (isUser){
+      const token = createToken(req.body.username);
+      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+      // res.status(201).json({ user: req.body.username });
+      // res.render('dummyView')
+      res.redirect('/')
+    }else{
+      res.render('login',{isregisterd:false,isUser:isUser})
+    }
+    
   }
   catch(err) {
     // const errors = handleErrors(err);
@@ -126,6 +131,11 @@ app.post('/auth', async (req, res) => {
 
   // res.send(`Welcome ${req.body.username} to the API`);
 });
+
+app.get('*', function(req, res) {
+  res.send('aa')
+});
+
 /*const reqHandlerLoader = require('./api');
 reqHandlerLoader.loadHandlers(app);
 reqHandlerLoader.loadErrorHandlers(app);*/
