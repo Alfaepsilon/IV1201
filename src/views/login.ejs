@@ -19,6 +19,10 @@
 			text-align: center;
 			color: #319b39;
 		}
+		.login-form h2 {
+			text-align: center;
+			color: #9b3131;
+		}
 		.login-form input[type="password"],
 		.login-form input[type="text"] {
 			width: 100%;
@@ -61,6 +65,11 @@
 					<h3>Congratulations, your account has been successfully created</h3>
 				</div>
 				<%}%>	
+				<% if (!isUser) {%>
+					<div>
+						<h2>Sorry, Check your username and password!</h3>
+					</div>
+					<%}%>	
 			<form action="/auth" method="POST">
 				<input type="text" id="username" name="username" placeholder="Username" required>
 				<input type="password" id="password" name="password" placeholder="Password" required>

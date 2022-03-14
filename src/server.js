@@ -3,9 +3,16 @@
 const path = require('path');
 const APP_ROOT_DIR = path.join(__dirname, '..');
 const express = require('express');
+const jwt = require('jsonwebtoken');
+
+
+const bodyParser = require('body-parser');
+const { Console } = require('console');
+
 const cookieParser = require('cookie-parser');
 const Controller = require('./controller/Controller').Controller;
-const Authorization = require('./api/Authorization').Authorization;
+const { requireAuth , notRequireAuth } = require('./middleware/authMiddleware');
+
 const result = require('dotenv-safe').config({
   path: path.join(APP_ROOT_DIR, '.env'),
   example: path.join(APP_ROOT_DIR, '.env'),
@@ -13,11 +20,9 @@ const result = require('dotenv-safe').config({
 });
 
 const app = express();
-this.Controller = new Controller();
-this.Authorization = new Authorization();
+// this.Controller = new Controller();
+// this.Authorization = new Authorization();
 
-const bodyParser = require('body-parser');
-const { Console } = require('console');
 app.use(bodyParser.json());
 
 app.set('views', './src/views');
@@ -29,12 +34,39 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(APP_ROOT_DIR, 'public')));
 
-this.Controller.updateDefault();
+// this.Controller.updateDefault();
 
-app.get('/', async (req, res) => {
+// ============================================
+// create json web token
+//TO test what happend when jwt expire change expiresIn to (for example) 5 sec
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: maxAge
+  });
+};
+// ============================================
+
+app.get('/', notRequireAuth, async (req, res) => {
+  try {
+    this.Controller = new Controller();
+    await this.Controller.updateDefault();
+    return res.render('login',{isregisterd:false, isUser:true})
+  } catch (error) {
+    res.render('error',{err:error})
+    console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+  } 
+
   // await this.Controller.register("Johan", "J", "a", 2, "awd", "awd", 2)
-  return res.render('login',{isregisterd:false})
+  // return res.render('login',{isregisterd:false})
 });
+
+app.get('/logOut',requireAuth, async (req, res) => {
+  res.clearCookie('jwt');
+  // res.cookie('jwt', '', { maxAge: 1 });
+  return res.redirect('/');
+});
+
 
 app.post('/signUp', async (req, res) => {
 
@@ -50,34 +82,44 @@ app.post('/signUp', async (req, res) => {
   
   var isregisterd =  await this.Controller.register(user)
   if (isregisterd){
-    return res.render('login',{isregisterd:isregisterd})
+    return res.render('login',{isregisterd:isregisterd,isUser:true})
   }else{
     return res.render('signUp',{errorMsg:true})
   }
 });
 
-app.get('/signUp', (req, res) => {
+app.get('/signUp', notRequireAuth, (req, res) => {
   return res.render('signUp',{errorMsg:false})
 });
 
+app.get('/auth', requireAuth, async (req, res) => {
+  res.render('dummyView')
+});
+
+
 app.post('/auth', async (req, res) => {
   // console.log(req.body)
-  var json = {
-    user: req.body.username,
-    pass: req.body.password
-  }
-  var loggedIn = await this.Controller.login(req.body.username, req.body.password)
-  await this.Authorization.signLogin(req, res);
-  var loggedIn2 = await this.Authorization.authLogin(this.Controller, req, res);
-  console.log(loggedIn2);
-  // res.json(json);
-  return res.render('dummyView',{loggedIn:loggedIn})
 
-  // res.send(`Welcome ${req.body.username} to the API`);
+  try {
+    var isUser = await this.Controller.login(req.body.username, req.body.password)
+    if (isUser){
+      const token = createToken(req.body.username);
+      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+      res.redirect('/')
+    }else{
+      res.render('login',{isregisterd:false,isUser:isUser})
+    }
+    
+  }
+  catch(err) {
+    res.render('error', {err: err})
+  }
+
 });
-/*const reqHandlerLoader = require('./api');
-reqHandlerLoader.loadHandlers(app);
-reqHandlerLoader.loadErrorHandlers(app);*/
+
+app.get('*', function(req, res) {
+  res.render('error', {err: 'There is no such end-point!'})
+});
 
 const server = app.listen(
   process.env.SERVER_PORT,

@@ -27,8 +27,15 @@ class recruitDAO {
   }
 
   getTransactions() {
-    return this.database;
-  }
+    try{
+      return this.database;
+    } catch
+    {
+     console.log("Error somewhere in get transaction function");
+     return null;
+  
+    }
+    }
 
   /**
      * Returns true if the function matches a person's parameters
@@ -38,8 +45,13 @@ class recruitDAO {
      */
 
   static async createDAO() {
-    const recDAO = new recruitDAO();
-    return recDAO;
+    try {
+      const recDAO = new recruitDAO();
+      return recDAO;
+    } catch {
+      console.log("Error somewhere in createDAO function");
+      return null;
+    }
   }
 
 
@@ -65,6 +77,7 @@ class recruitDAO {
 
   async login(username, password) {
     console.log("Logging in!");
+    try {
     var matchingPersons = await Person.findAll({
       where: { username: username}
     });
@@ -88,6 +101,10 @@ class recruitDAO {
       console.log("invalid");
       return [];
     }
+  } catch (err) {
+      console.log("Error somewhere in login function" + err);
+      throw err;
+    }
   }
 
   /**
@@ -101,6 +118,7 @@ class recruitDAO {
      */
   async register(user) //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
   {
+    try {
     await Person.create(
       { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, password: user.password, role_id: user.role_id }
     );
@@ -108,10 +126,14 @@ class recruitDAO {
       where: { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, role_id: user.role_id }
     });
     return isCreated
-  }
+  }catch (error) {
+    throw error;
+  } 
+}
   //updates the default database values to include our bcrypt encryption
   async updateDefault()
   {
+    try {
     await Person.update({password: "LiZ98qvL8Lw"},
     {where: {username: "JoelleWilkinson" }});
     await Person.update({password: "QkK48drV2Da"},
@@ -132,8 +154,10 @@ class recruitDAO {
     {where: {username: "PhillipRamsey" }});
     await Person.update({password: "MvZ46kfC1Kr"},
     {where: {username: "AustinMueller" }});
+  } catch {
+    console.log("Error somewhere in update defaukt function");
   }
-
+}
   async showCompetences()
   {
     var competences = await Competence.findAll();

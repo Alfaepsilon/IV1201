@@ -30,6 +30,7 @@ class Controller {
     try {return this.transactions.transaction(async(x) => {
     console.log(username);
     console.log(password);
+    try{
       var matchingPerson = await this.recruitDAO.login(username, password);
       console.log(Object.keys(matchingPerson).length)
       if (Object.keys(matchingPerson).length >= 1) {
@@ -38,10 +39,13 @@ class Controller {
       } else {
         console.log(false)
         return false;
+      }}catch (error){
+        throw error
       }
   });}
     catch (error) {
     console.log(error);
+    throw error;
   }
   }
 
@@ -76,7 +80,9 @@ class Controller {
      try{return this.transactions.transaction(async(x) => {
        await this.recruitDAO.updateDefault();
      });}
-     catch(error){console.log(error)}
+     catch(error){console.log(error)
+      throw error;
+    }
    }
 }
 
