@@ -152,5 +152,17 @@ class recruitDAO {
       { person_id: person_id, competence_id: competence_id, years_of_experience: years_of_experience });
   }
 
+  async getPersonId(username)
+  {
+    var persons = await Person.findAll({
+      where: { username: username}
+    });
+    const array = [];
+    for (let i = 0; i < Object.keys(persons).length; i++){
+      array.push(matchingPersons[i].get('person_id'));
+    }
+    return array;
+  }
+
 }
 module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register, updateDefault: recruitDAO.updateDefault, getTransactions: recruitDAO.getTransactions };
