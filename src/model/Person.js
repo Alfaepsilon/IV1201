@@ -30,7 +30,7 @@ class Person extends Sequelize.Model {
           allowNull: false,
         },
         pnr: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
           primaryKey: true,
           allowNull: true
         },
