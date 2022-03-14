@@ -44,7 +44,7 @@ The following frameworks are used.
 - nodemon
 
 ### Deployment
-The application is deployed to a cloud service. The service in question is Heroku. Link to website: https://iv1201-grupp-9.herokuapp.com/
+The application is deployed to a cloud service. The service in question is Heroku. Link to website: https://iv1201-grupp-9.herokuapp.com/. (To develop the cloud application, clone the code from the "cloud" branch).
 
 ## Usage
 
