@@ -19,7 +19,7 @@ const result = require('dotenv-safe').config({
 });
 
 const app = express();
-this.Controller = new Controller();
+// this.Controller = new Controller();
 
 app.use(bodyParser.json());
 
@@ -32,7 +32,7 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(APP_ROOT_DIR, 'public')));
 
-this.Controller.updateDefault();
+// this.Controller.updateDefault();
 
 // create json web token
 //TO test what happend when jwt expire change expiresIn to (for example) 5 sec
@@ -43,9 +43,32 @@ const createToken = (id) => {
   });
 };
 
+// app.use((error, req, res, next) => {
+//   console.log("Error Handling Middleware called")
+//   console.log('Path: ', req.path)
+//   console.error('Error: ', error)
+ 
+//   if (error.type == 'redirect')
+//       res.send('/error')
+
+//    else if (error.type == 'time-out') // arbitrary condition check
+//       res.status(408).send(error)
+//   else
+//       res.status(500).send(error)
+// })
+
+
 app.get('/', notRequireAuth, async (req, res) => {
+  try {
+    this.Controller = new Controller();
+    await this.Controller.updateDefault();
+    return res.render('login',{isregisterd:false})
+  } catch (error) {
+    res.render('error',{err:error})
+    console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+  } 
   // await this.Controller.register("Johan", "J", "a", 2, "awd", "awd", 2)
-  return res.render('login',{isregisterd:false})
+  
 });
 
 app.get('/logOut',requireAuth, async (req, res) => {
@@ -96,8 +119,8 @@ app.post('/auth', async (req, res) => {
     res.redirect('/')
   }
   catch(err) {
-    const errors = handleErrors(err);
-    res.status(400).json({ errors });
+    // const errors = handleErrors(err);
+    res.render('error', {err: err})
   }
   // res.json(json);
 
