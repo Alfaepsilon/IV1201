@@ -88,12 +88,26 @@ app.post('/signUp', async (req, res) => {
   }
 });
 
-app.get('/signUp', notRequireAuth, (req, res) => {
+app.get('/signUp', notRequireAuth, async (req, res) => {
+try{
+  this.Controller = new Controller();
+  await this.Controller.updateDefault();
   return res.render('signUp',{errorMsg:false})
+} catch (error) {
+  res.render('error',{err:error})
+  console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+} 
 });
 
 app.get('/auth', requireAuth, async (req, res) => {
+  try{
+    this.Controller = new Controller();
+    await this.Controller.updateDefault();
   res.render('dummyView')
+} catch (error) {
+  res.render('error',{err:error})
+  console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+} 
 });
 
 
