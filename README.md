@@ -52,8 +52,15 @@ The application is deployed to a cloud service. The service in question is Herok
 
 Install node.js, clone this git repository and install all required npm packages by giving the command `npm install` in the root directory.
 
-### Start the Application
+### Start the Application locally
 
 1. Copy the file `.env.example` to a file called `.env` and specify values for all settings.
 1. Create the database. You do not have to create any tables in the database, they will be created by the application.
 1. Start the application by giving the command `npm run start-dev` in the `root` directory.
+
+## Development
+### Locally
+Locally, simply use git to push to GitHub repository.
+
+### On Cloud
+Use Heroku git to push to Heroku. Changes will be deployed automatically. You can also sync your Heroku application to a repository. Specify branch and choose to either use "auto deploy" or manual.
