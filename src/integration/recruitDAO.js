@@ -30,8 +30,6 @@ class recruitDAO {
     console.log("Contructing DAO")
   }
 
-<<<<<<< Updated upstream
-=======
   getTransactions() {
     try {
       return this.database;
@@ -42,7 +40,6 @@ class recruitDAO {
 
     }
   }
->>>>>>> Stashed changes
   /**
      * Returns true if the function matches a person's parameters
      * @param {String} username The username of the user.
@@ -134,10 +131,6 @@ class recruitDAO {
     }
   }
 
-<<<<<<< Updated upstream
-}
-module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register };
-=======
   //updates the default database values to include our bcrypt encryption
   async updateDefault() {
     try {
@@ -201,4 +194,3 @@ module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: 
 }
 module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register, updateDefault: recruitDAO.updateDefault, getTransactions: recruitDAO.getTransactions, showCompetences: recruitDAO.showCompetences, jobSubmission: recruitDAO.jobSubmission, getPersonId: recruitDAO.getPersonId };
 
->>>>>>> Stashed changes

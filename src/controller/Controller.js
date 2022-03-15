@@ -29,20 +29,6 @@ class Controller {
     console.log(username);
     console.log(password);
     try {
-<<<<<<< Updated upstream
-      var matchingPerson = await this.recruitDAO.login(username, password);
-      console.log(Object.keys(matchingPerson).length)
-      if (Object.keys(matchingPerson).length >= 1) {
-        console.log(true);
-        return true
-      } else {
-        console.log(false)
-        return false;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-=======
       return this.transactions.transaction(async (x) => {
         var matchingPerson = await this.recruitDAO.login(username, password);
         console.log(Object.keys(matchingPerson).length)
@@ -99,7 +85,6 @@ class Controller {
       console.log(error)
       throw error;
     }
->>>>>>> Stashed changes
   }
 
   /**
@@ -110,26 +95,6 @@ class Controller {
      * @param {Date} tickets checks if "tickets" expertise is checked
      * @param {Date} tickets checks if "tickets" expertise is checked
      */
-<<<<<<< Updated upstream
-  async register(user) {
-    try {
-       var isCreated = await this.recruitDAO.register(user);
-       console.log(isCreated)
-       console.log(Object.keys(isCreated).length)
-       if (Object.keys(isCreated).length >= 1) {
-        console.log(true);
-        return true
-      } else {
-        console.log(false)
-        return false;
-      }
-    }
-    catch (error) { console.log(error); }
-  }
-}
-
-module.exports = { Controller: Controller, login: Controller.login, createController: Controller.createController, register: Controller.register };
-=======
 
   async apply(username, competence_id, from_date, to_date, years_of_experience) {
     console.log(username)
@@ -150,4 +115,3 @@ module.exports = { Controller: Controller, login: Controller.login, createContro
 }
 
 module.exports = { Controller: Controller, login: Controller.login, createController: Controller.createController, register: Controller.register, updateDefault: Controller.updateDefault, apply: Controller.apply }; 
->>>>>>> Stashed changes

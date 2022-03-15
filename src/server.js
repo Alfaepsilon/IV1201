@@ -8,10 +8,7 @@ const bodyParser = require('body-parser');
 const { Console } = require('console');
 const cookieParser = require('cookie-parser');
 const Controller = require('./controller/Controller').Controller;
-<<<<<<< Updated upstream
-=======
 const { requireAuth, notRequireAuth } = require('./middleware/authMiddleware');
->>>>>>> Stashed changes
 const result = require('dotenv-safe').config({
   path: path.join(APP_ROOT_DIR, '.env'),
   example: path.join(APP_ROOT_DIR, '.env'),
@@ -19,14 +16,10 @@ const result = require('dotenv-safe').config({
 });
 
 const app = express();
-<<<<<<< Updated upstream
-this.Controller = new Controller();
-=======
 var username = '';
 //this.Controller = new Controller();
 //this.Authorization = new Authorization();
 
->>>>>>> Stashed changes
 
 app.use(bodyParser.json());
 
@@ -39,11 +32,6 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(APP_ROOT_DIR, 'public')));
 
-<<<<<<< Updated upstream
-app.get('/', async (req, res) => {
-  // await this.Controller.register("Johan", "J", "a", 2, "awd", "awd", 2)
-  return res.render('login', { isregisterd: false })
-=======
 //this.Controller.updateDefault();
 
 // ============================================
@@ -72,7 +60,6 @@ app.get('/logOut', requireAuth, async (req, res) => {
   res.clearCookie('jwt');
   // res.cookie('jwt', '', { maxAge: 1 });
   return res.redirect('/');
->>>>>>> Stashed changes
 });
 
 app.post('/signUp', async (req, res) => {
@@ -89,20 +76,12 @@ app.post('/signUp', async (req, res) => {
 
   var isregisterd = await this.Controller.register(user)
   if (isregisterd) {
-<<<<<<< Updated upstream
-    return res.render('login', { isregisterd: isregisterd })
-=======
     return res.render('login', { isregisterd: isregisterd, isUser: true })
->>>>>>> Stashed changes
   } else {
     return res.render('signUp', { errorMsg: true })
   }
 });
 
-<<<<<<< Updated upstream
-app.get('/signUp', (req, res) => {
-  return res.render('signUp', { errorMsg: false })
-=======
 app.get('/signUp', notRequireAuth, async (req, res) => {
   try {
     this.Controller = new Controller();
@@ -123,7 +102,6 @@ app.get('/auth', requireAuth, async (req, res) => {
     res.render('error', { err: error })
     console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
   }
->>>>>>> Stashed changes
 });
 
 app.post('/auth', async (req, res) => {
@@ -140,14 +118,6 @@ app.post('/auth', async (req, res) => {
     }
 
   }
-<<<<<<< Updated upstream
-  var loggedIn = await this.Controller.login(req.body.username, req.body.password)
-
-  // res.json(json);
-  return res.render('dummyView', { loggedIn: loggedIn })
-
-  // res.send(`Welcome ${req.body.username} to the API`);
-=======
   catch (err) {
     res.render('error', { err: err })
   }
@@ -178,18 +148,12 @@ app.post('/apply', async (req, res) => {
 
 app.get('*', function (req, res) {
   res.render('error', { err: 'There is no such end-point!' })
->>>>>>> Stashed changes
 });
 
 var port = process.env.PORT || process.env.SERVER_PORT
 const server = app.listen(
-<<<<<<< Updated upstream
-  port,
-  process.env.SERVER_HOST,
-=======
   process.env.PORT,
   process.env.HOST,
->>>>>>> Stashed changes
   () => {
     console.log(
       `Server is up at ${server.address().address}:${server.address().port}`
