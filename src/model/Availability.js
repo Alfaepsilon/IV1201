@@ -7,7 +7,7 @@ class Availability extends Sequelize.Model {
        * @param {Sequelize} sequelize The sequelize object.
        * @return {Model} A sequelize model describing the Availability entity.
        */
-        Availability.init(
+        Availability.init( 
             {
                 /* availability_id: {
                      type: Sequelize.INTEGER,
