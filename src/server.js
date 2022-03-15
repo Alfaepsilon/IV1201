@@ -79,6 +79,7 @@ app.post('/signUp', async (req, res) => {
       username: req.body.username,
       role_id: 2
     };
+    username = user.username
 
     var isregisterd = await this.Controller.register(user)
     if (isregisterd) {
