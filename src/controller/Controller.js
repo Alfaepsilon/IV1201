@@ -27,8 +27,6 @@ class Controller {
      */
 
   async login(username, password) {
-    console.log(username);
-    console.log(password);
     try {
       return this.transactions.transaction(async (x) => {
         var matchingPerson = await this.recruitDAO.login(username, password);
@@ -42,7 +40,7 @@ class Controller {
         }
       });
     } catch (error) {
-      console.log(error);
+      throw error
     }
   }
 
@@ -53,29 +51,23 @@ class Controller {
   async register(user) {
     try {
       return this.transactions.transaction(async (x) => {
-        try {
-          var isCreated = await this.recruitDAO.register(user);
-          console.log(isCreated)
-          console.log(Object.keys(isCreated).length)
-          if (Object.keys(isCreated).length >= 1) {
-            console.log(true);
-            return true
-          } else {
-            console.log(false)
-            return false;
-          }
-        } catch (error) {
-          throw error
+        var isCreated = await this.recruitDAO.register(user);
+        console.log(isCreated)
+        console.log(Object.keys(isCreated).length)
+        if (Object.keys(isCreated).length >= 1) {
+          return true
+        } else {
+          return false;
         }
       });
     }
     catch (error) {
-      console.log(error)
       throw error
     }
   }
-
-  //updates the default database values to include our bcrypt encryption
+  /**
+   *updates the default database values to include our bcrypt encryption
+   */
   async updateDefault() {
     try {
       return this.transactions.transaction(async (x) => {
@@ -83,35 +75,43 @@ class Controller {
       });
     }
     catch (error) {
-      console.log(error)
       throw error;
     }
   }
 
   /**
-     * Passes login parameters to the DAO
-     * @param {String} tickets checks if "tickets" expertise is checked
-     * @param {String} lotteries checks if "lotteries" expertise is checked
-     * @param {String} rollercoaster checks if "rollercoaster" expertise is checked
-     * @param {Date} tickets checks if "tickets" expertise is checked
-     * @param {Date} tickets checks if "tickets" expertise is checked
+     * Passes application data to the DAO
+     * @param {String} username username of the user that applies
+     * @param {Int} competence_id id of the competence selected
+     * @param {Date} from_date date to start work
+     * @param {Date} to_date date to work until
+     * @param {Int} years_of_experience amount of experience in years
      */
 
   async apply(username, competence_id, from_date, to_date, years_of_experience) {
-    console.log(username)
-    //console.log(competence_id)
-    //console.log(from_date)
-    //console.log(to_date)
-    //console.log(years_of_experience)
-    var pid = await this.recruitDAO.getPersonId(username)
-    await this.recruitDAO.jobSubmission(pid, competence_id, from_date, to_date, years_of_experience)
+    try {
+      return this.transactions.transaction(async (x) => {
+        var pid = await this.recruitDAO.getPersonId(username)
+        await this.recruitDAO.jobSubmission(pid, competence_id, from_date, to_date, years_of_experience)
+      });
+    }
+    catch (error) {
+      throw error
+    }
   }
 
   /**
-   * 
+   * Diplays all of the competences
    */
   async display_competences() {
-    return await this.recruitDAO.showCompetences();
+    try {
+      return this.transactions.transaction(async (x) => {
+        return await this.recruitDAO.showCompetences();
+      });
+    }
+    catch (error) {
+      throw error
+    }
   }
 }
 

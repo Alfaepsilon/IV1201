@@ -17,8 +17,6 @@ const result = require('dotenv-safe').config({
 
 const app = express();
 var username = '';
-//this.Controller = new Controller();
-//this.Authorization = new Authorization();
 
 
 app.use(bodyParser.json());
@@ -32,56 +30,71 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(APP_ROOT_DIR, 'public')));
 
-//this.Controller.updateDefault();
 
-// ============================================
-// create json web token
-//TO test what happend when jwt expire change expiresIn to (for example) 5 sec
 const maxAge = 3 * 24 * 60 * 60;
+/**
+ * Skapar en json webtoken
+ * @param {*} id 
+ * @returns 
+ */
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: maxAge
   });
 };
-// ============================================
 
+/**
+ * Handles "GET" request for path '/'
+ */
 app.get('/', notRequireAuth, async (req, res) => {
   try {
     this.Controller = new Controller();
-    //await this.Controller.updateDefault();
     return res.render('login', { isregisterd: false, isUser: true })
   } catch (error) {
     res.render('error', { err: error })
-    console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
   }
 });
+
+/**
+ * Handles "GET" request for path '/logOut'
+ */
 
 app.get('/logOut', requireAuth, async (req, res) => {
   res.clearCookie('jwt');
-  // res.cookie('jwt', '', { maxAge: 1 });
   return res.redirect('/');
 });
 
+/**
+ * Handles "POST" request for path '/signUp'
+ */
 app.post('/signUp', async (req, res) => {
+  try {
 
-  var user = {
-    name: req.body.fname,
-    surname: req.body.lname,
-    pnr: req.body.pn,
-    email: req.body.email,
-    password: req.body.password,
-    username: req.body.username,
-    role_id: 2
-  };
+    var user = {
+      name: req.body.fname,
+      surname: req.body.lname,
+      pnr: req.body.pn,
+      email: req.body.email,
+      password: req.body.password,
+      username: req.body.username,
+      role_id: 2
+    };
 
-  var isregisterd = await this.Controller.register(user)
-  if (isregisterd) {
-    return res.render('login', { isregisterd: isregisterd, isUser: true })
-  } else {
-    return res.render('signUp', { errorMsg: true })
+    var isregisterd = await this.Controller.register(user)
+    if (isregisterd) {
+      return res.render('login', { isregisterd: isregisterd, isUser: true })
+    } else {
+      return res.render('signUp', { errorMsg: true })
+    }
+  }
+  catch (error) {
+    res.render('error', { err: error })
   }
 });
 
+/**
+ * Handles "GET" request for path '/signUp'
+ */
 app.get('/signUp', notRequireAuth, async (req, res) => {
   try {
     this.Controller = new Controller();
@@ -89,9 +102,12 @@ app.get('/signUp', notRequireAuth, async (req, res) => {
     return res.render('signUp', { errorMsg: false })
   } catch (error) {
     res.render('error', { err: error })
-    console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
   }
 });
+
+/**
+ * Handles "GET" request for path '/auth'
+ */
 
 app.get('/auth', requireAuth, async (req, res) => {
   try {
@@ -100,9 +116,12 @@ app.get('/auth', requireAuth, async (req, res) => {
     res.render('dummyView')
   } catch (error) {
     res.render('error', { err: error })
-    console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
   }
 });
+
+/**
+ * Handles "POST" request for path '/auth'
+ */
 
 app.post('/auth', async (req, res) => {
   // console.log(req.body)
@@ -123,6 +142,9 @@ app.post('/auth', async (req, res) => {
   }
 });
 
+/**
+ * Handles "GET" request for path '/apply'
+ */
 
 app.get('/apply', requireAuth, async (req, res) => {
   try {
@@ -133,6 +155,10 @@ app.get('/apply', requireAuth, async (req, res) => {
     res.render('error', { err: err })
   }
 });
+
+/**
+ * Handles "POST" request for path '/apply'
+ */
 
 app.post('/apply', async (req, res) => {
   try {
@@ -146,9 +172,17 @@ app.post('/apply', async (req, res) => {
   }
 });
 
+/**
+ * Handles "GET" request for path '/*'
+ */
+
 app.get('*', function (req, res) {
   res.render('error', { err: 'There is no such end-point!' })
 });
+
+/**
+ * Handles server connection
+ */
 
 const server = app.listen(
   process.env.PORT,

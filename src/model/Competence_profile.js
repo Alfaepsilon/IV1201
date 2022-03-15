@@ -9,11 +9,6 @@ class Competence_profile extends Sequelize.Model {
        */
         Competence_profile.init(
             {
-                /*competence_profile_id: {
-                    type: Sequelize.INTEGER,
-                    allowNull: false,
-                    primaryKey: true
-                }, */
                 person_id: {
                     type: Sequelize.INTEGER,
                     allowNull: false,

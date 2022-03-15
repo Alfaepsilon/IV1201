@@ -9,11 +9,6 @@ class Availability extends Sequelize.Model {
        */
         Availability.init(
             {
-                /* availability_id: {
-                     type: Sequelize.INTEGER,
-                     allowNull: true,
-                     primaryKey: true
-                 }, */
                 person_id: {
                     type: Sequelize.INTEGER,
                     allowNull: false,

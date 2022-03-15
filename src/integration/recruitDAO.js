@@ -10,7 +10,6 @@ class recruitDAO {
   /* Creates a new instance and connects to the database.
    */
   constructor() {
-    //Environment variables initializes the sequelize database.
     const ns = cls.createNamespace(process.env.DB_NAME);
     Sequelize.useCLS(ns);
     this.database = new Sequelize(
@@ -32,15 +31,16 @@ class recruitDAO {
     Competence_profile.createModel(this.database);
     console.log("Contructing DAO")
   }
+  /**
+   * Returns the database
+   * @returns {Database} database to be returned
+   */
 
   getTransactions() {
     try {
       return this.database;
-    } catch
-    {
-      console.log("Error somewhere in get transaction function");
-      return null;
-
+    } catch (error) {
+      throw error
     }
   }
   /**
@@ -54,9 +54,8 @@ class recruitDAO {
     try {
       const recDAO = new recruitDAO();
       return recDAO;
-    } catch {
-      console.log("Error somewhere in createDAO function");
-      return null;
+    } catch (error) {
+      throw error
     }
   }
 
@@ -69,8 +68,8 @@ class recruitDAO {
       await this.database.authenticate();
       await this.database.sync({ force: false });
       console.log("Making Tables!");
-    } catch {
-      console.log("Error authenticating or syncing database!");
+    } catch (error) {
+      throw error
     }
   }
 
@@ -105,36 +104,32 @@ class recruitDAO {
         return [];
       }
     } catch (err) {
-      console.log("Error somewhere in login function" + err);
       throw err;
     }
   }
 
   /**
      * Inserts a new person into the database with parameter values
-     * @param {String} name The name of the user.
-     * @param {String}  surname The surname of our user.
-     * @param {String}  email The mail address of our user.
-     * @param {String} pnr The personal number of our user.
-     * @param {String}  password The password of our user.
-     * @param {String}  role_id The role identification of our user.
+     * @param {User} user  The user to register
+     * @return {List} List of persons
      */
-  async register(user) //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
-  {
+  async register(user) {
     try {
       await Person.create(
         { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, password: user.password, role_id: user.role_id }
       );
-      var isCreated = await Person.findAll({
+      var persons = await Person.findAll({
         where: { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, role_id: user.role_id }
       });
-      return isCreated
+      return persons
     } catch (error) {
       throw error;
     }
   }
 
-  //updates the default database values to include our bcrypt encryption
+  /**
+   * updates the default database values to include our bcrypt encryption
+   **/
   async updateDefault() {
     try {
       await Person.update({ password: "LiZ98qvL8Lw" },
@@ -157,42 +152,70 @@ class recruitDAO {
         { where: { username: "PhillipRamsey" } });
       await Person.update({ password: "MvZ46kfC1Kr" },
         { where: { username: "AustinMueller" } });
-    } catch {
-      console.log("Error somewhere in update defaukt function");
+    } catch (error) {
+      throw error
     }
 
   }
 
+  /**
+   * Returns a list of competences
+   * @returns {Array} List of competences
+   */
   async showCompetences() {
-    var competences = await Competence.findAll();
-    const array = [];
-    for (let i = 0; i < Object.keys(competences).length; i++) {
-      array.push(competences[i].get('name'));
+    try {
+      var competences = await Competence.findAll();
+      const array = [];
+      for (let i = 0; i < Object.keys(competences).length; i++) {
+        array.push(competences[i].get('name'));
+      }
+      return array;
     }
-    return array;
+    catch (error) {
+      throw error
+    }
   }
 
+  /**
+     * Passes application data to the database
+     * @param {Int} person_id personal id of the user that applies
+     * @param {Int} competence_id id of the competence selected
+     * @param {Date} from_date date to start work
+     * @param {Date} to_date date to work until
+     * @param {Int} years_of_experience amount of experience in years
+     */
   async jobSubmission(person_id, competence_id, from_date, to_date, years_of_experience) {
-    console.log(person_id)
-    console.log(competence_id)
-    console.log(from_date)
-    console.log(to_date)
-    console.log(years_of_experience)
-    await Availability.create(
-      { person_id: person_id, from_date: from_date, to_date: to_date });
-    await Competence_profile.create(
-      { person_id: person_id, competence_id: competence_id, years_of_experience: years_of_experience });
+    try {
+
+      await Availability.create(
+        { person_id: person_id, from_date: from_date, to_date: to_date });
+      await Competence_profile.create(
+        { person_id: person_id, competence_id: competence_id, years_of_experience: years_of_experience });
+    }
+    catch (error) {
+      throw error
+    }
   }
+  /**
+   * Returns ID of person
+   * @param {String} username Username of person we want to get ID from
+   * @returns {Array} Array of person id:s
+   */
 
   async getPersonId(username) {
-    var persons = await Person.findAll({
-      where: { username: username }
-    });
-    const array = [];
-    for (let i = 0; i < Object.keys(persons).length; i++) {
-      array.push(persons[i].get('person_id'));
+    try {
+      var persons = await Person.findAll({
+        where: { username: username }
+      });
+      const array = [];
+      for (let i = 0; i < Object.keys(persons).length; i++) {
+        array.push(persons[i].get('person_id'));
+      }
+      return array;
     }
-    return array;
+    catch (error) {
+      throw error
+    }
   }
 }
 module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register, updateDefault: recruitDAO.updateDefault, getTransactions: recruitDAO.getTransactions, showCompetences: recruitDAO.showCompetences, jobSubmission: recruitDAO.jobSubmission, getPersonId: recruitDAO.getPersonId };

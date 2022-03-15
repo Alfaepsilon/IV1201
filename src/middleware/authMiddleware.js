@@ -1,16 +1,19 @@
 const jwt = require("jsonwebtoken");
 
+/**
+ * Kollar om en token är verifierad.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 const requireAuth = (req, res, next) => {
     const token = req.cookies.jwt;
-
-    // check json web token exists & is verified
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
             if (err) {
                 res.locals.user = null;
                 if (err.message == "jwt expired") {
                     res.clearCookie('jwt');
-                    // res.cookie("jwt", "", { maxAge: 1 });
                 }
                 res.redirect("/");
             } else {
@@ -25,7 +28,12 @@ const requireAuth = (req, res, next) => {
         res.redirect("/");
     }
 };
-// check current user
+/**
+ * Kollar om token är verifierad
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 const notRequireAuth = (req, res, next) => {
     const token = req.cookies.jwt;
     if (token) {
@@ -33,7 +41,6 @@ const notRequireAuth = (req, res, next) => {
             if (err) {
                 if (err.message == "jwt expired") {
                     res.clearCookie('jwt');
-                    // res.cookie("jwt", "", { maxAge: 1 });
                 }
                 res.locals.user = null;
                 next();
