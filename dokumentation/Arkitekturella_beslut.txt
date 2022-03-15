@@ -40,3 +40,6 @@ Browser check: Henrik
 Ny usecase: 5.3
 Henrik: View och Controller
 Amiran: Model och Integration.
+Browser check:
+Henrik: Microsoft Edge, FireFox, GoogleChrome.
+Bushraa: Safari
