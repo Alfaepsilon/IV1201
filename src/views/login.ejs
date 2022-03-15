@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Login Form</title>
-		<style>
+
+<head>
+	<meta charset="utf-8">
+	<title>Login Form</title>
+	<style>
 		.login-form {
 			width: 300px;
 			margin: 0 auto;
 			font-family: Tahoma, Geneva, sans-serif;
 		}
+
 		.login-form h1 {
 			text-align: center;
 			color: #4d4d4d;
 			font-size: 24px;
 			padding: 20px 0 20px 0;
 		}
+
 		.login-form h3 {
 			text-align: center;
 			color: #319b39;
 		}
+
+		.login-form h2 {
+			text-align: center;
+			color: #9b3131;
+		}
+
 		.login-form input[type="password"],
 		.login-form input[type="text"] {
 			width: 100%;
 			padding: 15px;
 			border: 1px solid #dddddd;
 			margin-bottom: 15px;
-			box-sizing:border-box;
+			box-sizing: border-box;
 		}
+
 		.login-form input[type="submit"] {
 			width: 100%;
 			padding: 15px;
@@ -37,10 +47,11 @@
 			font-weight: bold;
 			color: #ffffff;
 		}
-		.login-form a{
+
+		.login-form a {
 			font-size: 12px;
 			display: block;
-			text-align:center;
+			text-align: center;
 			text-decoration: none !important;
 			width: 100%;
 			padding: 15px;
@@ -51,25 +62,32 @@
 			font-weight: bold;
 			color: #ffffff;
 		}
-		</style>
-	</head>
-	<body>
-		<div class="login-form">
-			<h1>Login Form</h1>
-			<% if (isregisterd) {%>
-				<div>
-					<h3>Congratulations, your account has been successfully created</h3>
-				</div>
-				<%}%>	
-			<form action="/auth" method="POST">
-				<input type="text" id="username" name="username" placeholder="Username" required>
-				<input type="password" id="password" name="password" placeholder="Password" required>
-				<input type="submit" value="login">
-			</form>
-		</div>
-		<br>
-		<div class="login-form">
-			<a href="/signUp">Sign Up</a>
-		</div>
-	</body>
+	</style>
+</head>
+
+<body>
+	<div class="login-form">
+		<h1>Login Form</h1>
+		<% if (isregisterd) {%>
+			<div>
+				<h3>Congratulations, your account has been successfully created</h3>
+			</div>
+			<%}%>
+				<% if (!isUser) {%>
+					<div>
+						<h2>Sorry, Check your username and password!</h3>
+					</div>
+					<%}%>
+						<form action="/auth" method="POST">
+							<input type="text" id="username" name="username" placeholder="Username" required>
+							<input type="password" id="password" name="password" placeholder="Password" required>
+							<input type="submit" value="login">
+						</form>
+	</div>
+	<br>
+	<div class="login-form">
+		<a href="/signUp">Sign Up</a>
+	</div>
+</body>
+
 </html>

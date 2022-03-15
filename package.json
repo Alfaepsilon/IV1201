@@ -5,9 +5,14 @@
   "author": "Henrik Cassé",
   "license": "ISC",
   "main": "src/server.js",
+  "engines": {
+    "node": "16.14.0",
+    "npm": "8.3.1"
+  },
   "scripts": {
     "start-dev": "SET NODE_ENV=development & nodemon src/server",
-    "start": "SET NODE_ENV=production & nodemon src/server"
+    "start": "SET NODE_ENV=production & nodemon src/server",
+    "heroku-postbuild": "npm install --production"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

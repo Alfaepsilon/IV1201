@@ -3,8 +3,15 @@
 const path = require('path');
 const APP_ROOT_DIR = path.join(__dirname, '..');
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
+const { Console } = require('console');
 const cookieParser = require('cookie-parser');
 const Controller = require('./controller/Controller').Controller;
+<<<<<<< Updated upstream
+=======
+const { requireAuth, notRequireAuth } = require('./middleware/authMiddleware');
+>>>>>>> Stashed changes
 const result = require('dotenv-safe').config({
   path: path.join(APP_ROOT_DIR, '.env'),
   example: path.join(APP_ROOT_DIR, '.env'),
@@ -12,10 +19,15 @@ const result = require('dotenv-safe').config({
 });
 
 const app = express();
+<<<<<<< Updated upstream
 this.Controller = new Controller();
+=======
+var username = '';
+//this.Controller = new Controller();
+//this.Authorization = new Authorization();
 
-const bodyParser = require('body-parser');
-const { Console } = require('console');
+>>>>>>> Stashed changes
+
 app.use(bodyParser.json());
 
 app.set('views', './src/views');
@@ -27,9 +39,40 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(APP_ROOT_DIR, 'public')));
 
+<<<<<<< Updated upstream
 app.get('/', async (req, res) => {
   // await this.Controller.register("Johan", "J", "a", 2, "awd", "awd", 2)
   return res.render('login', { isregisterd: false })
+=======
+//this.Controller.updateDefault();
+
+// ============================================
+// create json web token
+//TO test what happend when jwt expire change expiresIn to (for example) 5 sec
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: maxAge
+  });
+};
+// ============================================
+
+app.get('/', notRequireAuth, async (req, res) => {
+  try {
+    this.Controller = new Controller();
+    //await this.Controller.updateDefault();
+    return res.render('login', { isregisterd: false, isUser: true })
+  } catch (error) {
+    res.render('error', { err: error })
+    console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+  }
+});
+
+app.get('/logOut', requireAuth, async (req, res) => {
+  res.clearCookie('jwt');
+  // res.cookie('jwt', '', { maxAge: 1 });
+  return res.redirect('/');
+>>>>>>> Stashed changes
 });
 
 app.post('/signUp', async (req, res) => {
@@ -46,37 +89,107 @@ app.post('/signUp', async (req, res) => {
 
   var isregisterd = await this.Controller.register(user)
   if (isregisterd) {
+<<<<<<< Updated upstream
     return res.render('login', { isregisterd: isregisterd })
+=======
+    return res.render('login', { isregisterd: isregisterd, isUser: true })
+>>>>>>> Stashed changes
   } else {
     return res.render('signUp', { errorMsg: true })
   }
 });
 
+<<<<<<< Updated upstream
 app.get('/signUp', (req, res) => {
   return res.render('signUp', { errorMsg: false })
+=======
+app.get('/signUp', notRequireAuth, async (req, res) => {
+  try {
+    this.Controller = new Controller();
+    //await this.Controller.updateDefault();
+    return res.render('signUp', { errorMsg: false })
+  } catch (error) {
+    res.render('error', { err: error })
+    console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+  }
+});
+
+app.get('/auth', requireAuth, async (req, res) => {
+  try {
+    this.Controller = new Controller();
+    //await this.Controller.updateDefault();
+    res.render('dummyView')
+  } catch (error) {
+    res.render('error', { err: error })
+    console.log('BAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+  }
+>>>>>>> Stashed changes
 });
 
 app.post('/auth', async (req, res) => {
   // console.log(req.body)
-  var json = {
-    user: req.body.username,
-    pass: req.body.password
+  try {
+    username = req.body.username
+    var isUser = await this.Controller.login(req.body.username, req.body.password)
+    if (isUser) {
+      const token = createToken(req.body.username);
+      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+      res.redirect('/')
+    } else {
+      res.render('login', { isregisterd: false, isUser: isUser })
+    }
+
   }
+<<<<<<< Updated upstream
   var loggedIn = await this.Controller.login(req.body.username, req.body.password)
 
   // res.json(json);
   return res.render('dummyView', { loggedIn: loggedIn })
 
   // res.send(`Welcome ${req.body.username} to the API`);
+=======
+  catch (err) {
+    res.render('error', { err: err })
+  }
 });
-/*const reqHandlerLoader = require('./api');
-reqHandlerLoader.loadHandlers(app);
-reqHandlerLoader.loadErrorHandlers(app);*/
+
+
+app.get('/apply', requireAuth, async (req, res) => {
+  try {
+    var competences = await this.Controller.display_competences()
+    res.render('apply', { competences: competences })
+  }
+  catch (err) {
+    res.render('error', { err: err })
+  }
+});
+
+app.post('/apply', async (req, res) => {
+  try {
+
+    await this.Controller.apply(username, req.body.i, req.body.from, req.body.until, req.body.years)
+    res.redirect('/auth')
+  }
+
+  catch (err) {
+    res.render('error', { err: err })
+  }
+});
+
+app.get('*', function (req, res) {
+  res.render('error', { err: 'There is no such end-point!' })
+>>>>>>> Stashed changes
+});
 
 var port = process.env.PORT || process.env.SERVER_PORT
 const server = app.listen(
+<<<<<<< Updated upstream
   port,
   process.env.SERVER_HOST,
+=======
+  process.env.PORT,
+  process.env.HOST,
+>>>>>>> Stashed changes
   () => {
     console.log(
       `Server is up at ${server.address().address}:${server.address().port}`

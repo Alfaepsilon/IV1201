@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
 const Person = require('../model/Person').Person;
+const Availability = require('../model/Availability').Availability;
+const Competence = require('../model/Competence').Competence;
+const Competence_profile = require('../model/Competence_profile').Competence_profile;
 /* This class is responsible for all database calls.
  */
 class recruitDAO {
@@ -11,12 +14,35 @@ class recruitDAO {
       process.env.DB_NAME,
       process.env.DB_USER,
       process.env.DB_PASS,
-      { host: process.env.DB_HOST, dialect: process.env.DB_DIALECT }
+      {
+        host: process.env.DB_HOST, dialect: process.env.DB_DIALECT, dialectOptions: {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false
+          }
+        }
+      },
     );
     Person.createModel(this.database);
-    console.log('Constructing recruitDAO')
+    Availability.createModel(this.database);
+    Competence.createModel(this.database);
+    Competence_profile.createModel(this.database);
+    console.log("Contructing DAO")
   }
 
+<<<<<<< Updated upstream
+=======
+  getTransactions() {
+    try {
+      return this.database;
+    } catch
+    {
+      console.log("Error somewhere in get transaction function");
+      return null;
+
+    }
+  }
+>>>>>>> Stashed changes
   /**
      * Returns true if the function matches a person's parameters
      * @param {String} username The username of the user.
@@ -25,8 +51,13 @@ class recruitDAO {
      */
 
   static async createDAO() {
-    const recDAO = new recruitDAO();
-    return recDAO;
+    try {
+      const recDAO = new recruitDAO();
+      return recDAO;
+    } catch {
+      console.log("Error somewhere in createDAO function");
+      return null;
+    }
   }
 
 
@@ -52,28 +83,30 @@ class recruitDAO {
 
   async login(username, password) {
     console.log("Logging in!");
-    var matchingPersons = await Person.findAll({
-      where: { username: username}
-    });
-    var check = false;
-    var matchingPerson;
-    for (let i = 0; i < Object.keys(matchingPersons).length; i++){
-      console.log(matchingPersons[i].get('password'));
-      if(Person.validPassword(password, matchingPersons[i].get('password')))
-      {
-        matchingPerson = matchingPersons[i].get({plain: true});
-        check = true;
+    try {
+      var matchingPersons = await Person.findAll({
+        where: { username: username }
+      });
+      var check = false;
+      var matchingPerson;
+      for (let i = 0; i < Object.keys(matchingPersons).length; i++) {
+        console.log(matchingPersons[i].get('password'));
+        if (Person.validPassword(password, matchingPersons[i].get('password'))) {
+          matchingPerson = matchingPersons[i].get({ plain: true });
+          check = true;
+        }
       }
-    }
-    if(check)
-    {
-      console.log("valid");
-      return matchingPersons;
-    }
-    else
-    {
-      console.log("invalid");
-      return [];
+      if (check) {
+        console.log("valid");
+        return matchingPersons;
+      }
+      else {
+        console.log("invalid");
+        return [];
+      }
+    } catch (err) {
+      console.log("Error somewhere in login function" + err);
+      throw err;
     }
   }
 
@@ -88,14 +121,84 @@ class recruitDAO {
      */
   async register(user) //password has to be encrypted, role_id 1 is for recruiters and 2 is for applicants
   {
-    await Person.create(
-      { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, password: user.password, role_id: user.role_id }
-    );
-    var isCreated = await Person.findAll({
-      where: { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, role_id: user.role_id }
-    });
-    return isCreated
+    try {
+      await Person.create(
+        { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, password: user.password, role_id: user.role_id }
+      );
+      var isCreated = await Person.findAll({
+        where: { name: user.name, surname: user.surname, email: user.email, pnr: user.pnr, username: user.username, role_id: user.role_id }
+      });
+      return isCreated
+    } catch (error) {
+      throw error;
+    }
   }
 
+<<<<<<< Updated upstream
 }
 module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register };
+=======
+  //updates the default database values to include our bcrypt encryption
+  async updateDefault() {
+    try {
+      await Person.update({ password: "LiZ98qvL8Lw" },
+        { where: { username: "JoelleWilkinson" } });
+      await Person.update({ password: "QkK48drV2Da" },
+        { where: { username: "MartinCummings" } });
+      await Person.update({ password: "EyD84euX5Nj" },
+        { where: { username: "DanteMason" } });
+      await Person.update({ password: "VdE34mqY2Xy" },
+        { where: { username: "RisaMayer" } });
+      await Person.update({ password: "NmK87boS4Lf" },
+        { where: { username: "MaxwellBailey" } });
+      await Person.update({ password: "LqK20ygU3Lw" },
+        { where: { username: "EmiFlowers" } });
+      await Person.update({ password: "OjP41mkY3Vb" },
+        { where: { username: "HedleyArnold" } });
+      await Person.update({ password: "LbH38urF4Kn" },
+        { where: { username: "ArmandTodd" } });
+      await Person.update({ password: "XoH15hnY3Bw" },
+        { where: { username: "PhillipRamsey" } });
+      await Person.update({ password: "MvZ46kfC1Kr" },
+        { where: { username: "AustinMueller" } });
+    } catch {
+      console.log("Error somewhere in update defaukt function");
+    }
+
+  }
+
+  async showCompetences() {
+    var competences = await Competence.findAll();
+    const array = [];
+    for (let i = 0; i < Object.keys(competences).length; i++) {
+      array.push(competences[i].get('name'));
+    }
+    return array;
+  }
+
+  async jobSubmission(person_id, competence_id, from_date, to_date, years_of_experience) {
+    console.log(person_id)
+    console.log(competence_id)
+    console.log(from_date)
+    console.log(to_date)
+    console.log(years_of_experience)
+    await Availability.create(
+      { person_id: person_id, from_date: from_date, to_date: to_date });
+    await Competence_profile.create(
+      { person_id: person_id, competence_id: competence_id, years_of_experience: years_of_experience });
+  }
+
+  async getPersonId(username) {
+    var persons = await Person.findAll({
+      where: { username: username }
+    });
+    const array = [];
+    for (let i = 0; i < Object.keys(persons).length; i++) {
+      array.push(persons[i].get('person_id'));
+    }
+    return array;
+  }
+}
+module.exports = { recruitDAO: recruitDAO, login: recruitDAO.login, makeTables: recruitDAO.makeTables, createDAO: recruitDAO.createDAO, register: recruitDAO.register, updateDefault: recruitDAO.updateDefault, getTransactions: recruitDAO.getTransactions, showCompetences: recruitDAO.showCompetences, jobSubmission: recruitDAO.jobSubmission, getPersonId: recruitDAO.getPersonId };
+
+>>>>>>> Stashed changes

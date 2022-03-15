@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>signUp Form</title>
-		<style>
+
+<head>
+	<meta charset="utf-8">
+	<title>signUp Form</title>
+	<style>
 		.signUp-form {
 			width: 300px;
 			margin: 0 auto;
 			font-family: Tahoma, Geneva, sans-serif;
 		}
+
 		.signUp-form h1 {
 			text-align: center;
 			color: #4d4d4d;
 			font-size: 24px;
 			padding: 20px 0 20px 0;
 		}
+
 		.signUp-form h3 {
 			text-align: center;
 			color: #a72424;
 		}
+
 		.signUp-form input[type="password"],
 		.signUp-form input[type="text"] {
 			width: 100%;
 			padding: 15px;
 			border: 1px solid #dddddd;
 			margin-bottom: 15px;
-			box-sizing:border-box;
+			box-sizing: border-box;
 		}
+
 		.signUp-form input[type="submit"] {
 			width: 100%;
 			padding: 15px;
@@ -37,30 +42,40 @@
 			font-weight: bold;
 			color: #ffffff;
 		}
-		</style>
-	</head>
-	<body>
-        <% if (errorMsg) {%>
-			<div>
-				Sorry try again
-			</div>
-			<%}%>
-		<div class="signUp-form">
-			<h1>signUp Form</h1>
-			<% if (errorMsg) {%>
-				<div>
-					<h3>Sorry try again</h3>
-				</div>
-				<%}%>
-			<form action="/signUp" method="POST">
-				<input type="text" id="username" name="username" placeholder="User name" required>
-				<input type="text" id="fname" name="fname" placeholder="First name" required>
-                <input type="text" id="lname" name="lname" placeholder="Last name" required>
-				<input type="text" id="pn" name="pn" placeholder="Person Number" required>
-				<input type="text" id="email" name="email" placeholder="Email Address" required>
-				<input type="password" id="password" name="password" placeholder="Password" required>
-                <input type="submit" value="Sign Up">
-			</form>
+
+		.signUp-form input[type="email"] {
+			width: 100%;
+			padding: 15px;
+			border: 1px solid #dddddd;
+			margin-bottom: 15px;
+			box-sizing: border-box;
+		}
+	</style>
+</head>
+
+<body>
+	<% if (errorMsg) {%>
+		<div>
+			Sorry try again
 		</div>
-	</body>
+		<%}%>
+			<div class="signUp-form">
+				<h1>signUp Form</h1>
+				<% if (errorMsg) {%>
+					<div>
+						<h3>Sorry try again</h3>
+					</div>
+					<%}%>
+						<form action="/signUp" method="POST">
+							<input type="text" id="username" name="username" placeholder="User name" required>
+							<input type="text" id="fname" name="fname" placeholder="First name" required>
+							<input type="text" id="lname" name="lname" placeholder="Last name" required>
+							<input type="text" id="pn" name="pn" placeholder="Person Number" required>
+							<input type="email" id="email" name="email" placeholder="Email Address" required>
+							<input type="password" id="password" name="password" placeholder="Password" required>
+							<input type="submit" value="Sign Up">
+						</form>
+			</div>
+</body>
+
 </html>

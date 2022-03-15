@@ -9,6 +9,10 @@ class Person extends Sequelize.Model {
    */
     Person.init(
       {
+        person_id: {
+          type: Sequelize.INTEGER,
+          allowNull: true
+        },
         username: {
           type: Sequelize.STRING,
           allowNull: true
@@ -30,7 +34,7 @@ class Person extends Sequelize.Model {
           allowNull: false,
         },
         pnr: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
           primaryKey: true,
           allowNull: true
         },
@@ -43,14 +47,14 @@ class Person extends Sequelize.Model {
           allowNull: false,
         },
       },
-      { sequelize, modelName: 'person', paranoid: true, freezeTableName: true, timestamps: false},
+      { sequelize, modelName: 'person', paranoid: true, freezeTableName: true, timestamps: false },
     );
     Person.validPassword = (password, hash) => {
       return bcrypt.compareSync(password, hash);
-  }
+    }
     return Person;
   }
 
 }
 
-module.exports = { Person: Person, createModel: Person.createModel};
+module.exports = { Person: Person, createModel: Person.createModel };

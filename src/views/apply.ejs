@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Job application</title>
+    <style>
+        .check_box {
+            width: 20px;
+            padding: 0 5px;
+            height: 20px;
+            font-size: 16px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="check_box"></div>
+    <form id="checkboxes" action="/apply" method="POST">
+        <%for(let i in competences){%>
+            <input type="checkbox" id="i" name="i" value=<%=i%>>
+            <%= competences[i]%></input>
+                <%}%>
+                    Work from: <input type="date" id="from" name="from"></input>
+                    Until: <input type="date" id="until" name="until"></input>
+                    Years of experience: <input type="number" id="years" name="years" />
+                    <input type="submit" id="apply">Apply!</input>
+    </form>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var checkboxes = document.getElementById("checkboxes");
+            var chks = checkboxes.getElementsByTagName("INPUT");
+            for (var i = 0; i < chks.length; i++) {
+                chks[i].onclick = function () {
+                    for (var i = 0; i < chks.length; i++) {
+                        if (chks[i] != this && this.checked) {
+                            chks[i].checked = false;
+                        }
+                    }
+                };
+            }
+        };
+    </script>
+    </div>
+
+</body>
+
+</html>
