@@ -30,3 +30,13 @@ Better documentation (architectural descisions and program documentation).
 
 2022-02-24
 Encryption: bcrypt.
+
+2022-03-11:
+Transaction handling: Amiran
+Error handler: Bushraas
+Browser check: Henrik
+
+2022-03-14:
+Ny usecase: 5.3
+Henrik: View och Controller
+Amiran: Model och Integration.
