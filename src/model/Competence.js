@@ -9,7 +9,7 @@ class Competence extends Sequelize.Model {
    */
     Competence.init(
       {
-        Competence_id: {
+        competence_id: {
           type: Sequelize.INTEGER,
           allowNull: false,
           primaryKey: true
