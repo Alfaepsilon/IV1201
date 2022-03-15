@@ -150,7 +150,6 @@ app.get('*', function (req, res) {
   res.render('error', { err: 'There is no such end-point!' })
 });
 
-var port = process.env.PORT || process.env.SERVER_PORT
 const server = app.listen(
   process.env.PORT,
   process.env.HOST,

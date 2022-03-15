@@ -5,6 +5,7 @@ const recruitDAO = require('../integration/recruitDAO').recruitDAO;
 class Controller {
   constructor() {
     this.recruitDAO = new recruitDAO();
+    this.transactions = this.recruitDAO.getTransactions();
   }
 
   /**
